@@ -1,0 +1,1650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+    <Document>
+        <Folder>
+            <name>Shapefile layer</name>
+            <Placemark>
+                <name>Block_E_P9265</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2490171926,-9.6529759668,0.0000000000 143.3407233926,-9.4985917234,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P9180</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2482707275,-9.6527195055,0.0000000000 143.3397989877,-9.4986346381,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P9095</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2475242631,-9.6524630446,0.0000000000 143.3388745841,-9.4986775527,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P9010</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2467777994,-9.6522065839,0.0000000000 143.3379501820,-9.4987204673,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8925</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2460313366,-9.6519501234,0.0000000000 143.3370257813,-9.4987633818,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8840</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2452848745,-9.6516936633,0.0000000000 143.3361013819,-9.4988062962,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8755</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2445384133,-9.6514372034,0.0000000000 143.3351769840,-9.4988492106,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8670</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2437919528,-9.6511807438,0.0000000000 143.3342525874,-9.4988921249,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8585</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2430454931,-9.6509242844,0.0000000000 143.3333281923,-9.4989350391,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8500</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2422990341,-9.6506678253,0.0000000000 143.3324037985,-9.4989779533,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8415</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2415525760,-9.6504113665,0.0000000000 143.3314794062,-9.4990208674,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8330</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2408061186,-9.6501549080,0.0000000000 143.3305550152,-9.4990637814,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8245</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2400596620,-9.6498984497,0.0000000000 143.3296306257,-9.4991066954,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8160</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2393132062,-9.6496419917,0.0000000000 143.3287062375,-9.4991496093,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P8075</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2385667512,-9.6493855339,0.0000000000 143.3277818507,-9.4991925232,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7990</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2378202969,-9.6491290765,0.0000000000 143.3268574654,-9.4992354370,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7905</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2370738435,-9.6488726193,0.0000000000 143.3259330814,-9.4992783507,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7820</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2363273908,-9.6486161623,0.0000000000 143.3250086988,-9.4993212643,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7735</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2355809389,-9.6483597057,0.0000000000 143.3240843176,-9.4993641779,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7650</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2348344877,-9.6481032493,0.0000000000 143.3231599379,-9.4994070914,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7565</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2340880374,-9.6478467931,0.0000000000 143.3222355595,-9.4994500049,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7480</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2333415878,-9.6475903373,0.0000000000 143.3213111825,-9.4994929183,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7395</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2325951390,-9.6473338817,0.0000000000 143.3203868069,-9.4995358316,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7310</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2318486910,-9.6470774263,0.0000000000 143.3194624327,-9.4995787449,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7225</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2311022438,-9.6468209713,0.0000000000 143.3185380599,-9.4996216581,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7140</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2303557974,-9.6465645165,0.0000000000 143.3176136885,-9.4996645712,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P7055</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2296093517,-9.6463080619,0.0000000000 143.3166893185,-9.4997074843,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P6970</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2288629068,-9.6460516077,0.0000000000 143.3157649499,-9.4997503973,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P6885</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2281164630,-9.6457951533,0.0000000000 143.3148405830,-9.4997933103,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P6630</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2273700194,-9.6455387000,0.0000000000 143.3040625921,-9.5164250228,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P6460</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2266235768,-9.6452822465,0.0000000000 143.3018506629,-9.5186369215,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P6290</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2258771351,-9.6450257933,0.0000000000 143.2994767096,-9.5211202517,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P6120</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2251306941,-9.6447693404,0.0000000000 143.2975898548,-9.5227835542,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P5950</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2243842540,-9.6445128873,0.0000000000 143.2965433120,-9.5230321856,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P5780</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2236378140,-9.6442564353,0.0000000000 143.2952678609,-9.5236661916,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P5610</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2228913760,-9.6439999833,0.0000000000 143.2943207346,-9.5237474594,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P5440</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2221449380,-9.6437435313,0.0000000000 143.2930361519,-9.5243968448,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P5270</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2213985010,-9.6434870803,0.0000000000 143.2921642524,-9.5243514740,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P5100</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2206520650,-9.6432306283,0.0000000000 143.2912768084,-9.5243322734,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P4930</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2199056290,-9.6429741773,0.0000000000 143.2901615835,-9.5246965501,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P4760</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2191591940,-9.6427177263,0.0000000000 143.2892369842,-9.5247399070,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P4590</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2184127600,-9.6424612763,0.0000000000 143.2883394638,-9.5247376771,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P4420</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2176663270,-9.6422048263,0.0000000000 143.2874319325,-9.5247523038,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P4250</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2169198950,-9.6419483763,0.0000000000 143.2863914596,-9.5249907447,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P4080</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2161734630,-9.6416919263,0.0000000000 143.2853567367,-9.5252195074,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P3910</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2154270320,-9.6414354773,0.0000000000 143.2849146191,-9.5244505998,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P3740</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2146806020,-9.6411790273,0.0000000000 143.2844725020,-9.5236816930,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P3570</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2139341730,-9.6409225793,0.0000000000 143.2837929896,-9.5233124487,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P3400</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2131877440,-9.6406661303,0.0000000000 143.2830804692,-9.5229987779,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P3230</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2124413170,-9.6404096823,0.0000000000 143.2825321612,-9.5224086510,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P3060</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2116948900,-9.6401532333,0.0000000000 143.2819771317,-9.5218298384,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2890</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2109484640,-9.6398967863,0.0000000000 143.2812247058,-9.5215833530,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2720</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2102020382,-9.6396403384,0.0000000000 143.2805318244,-9.5212366244,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2550</name>
+                <styleUrl>#style_2</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2094556136,-9.6393838911,0.0000000000 143.2803461079,-9.5200360580,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2380</name>
+                <styleUrl>#style_2</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2087091898,-9.6391274440,0.0000000000 143.2803224530,-9.5185626516,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2295</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2079627670,-9.6388709973,0.0000000000 143.2898831950,-9.5009519353,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2210</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2072163440,-9.6386145503,0.0000000000 143.2889588670,-9.5009948463,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2125</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2064699230,-9.6383581046,0.0000000000 143.2880345403,-9.5010377574,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P2040</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2057235023,-9.6381016586,0.0000000000 143.2871102149,-9.5010806684,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1955</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2049770824,-9.6378452129,0.0000000000 143.2861858910,-9.5011235793,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1870</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2042306632,-9.6375887675,0.0000000000 143.2852615684,-9.5011664902,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1785</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2034842448,-9.6373323224,0.0000000000 143.2843372472,-9.5012094010,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1700</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2027378272,-9.6370758775,0.0000000000 143.2834129274,-9.5012523117,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1615</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2019914104,-9.6368194329,0.0000000000 143.2824886090,-9.5012952224,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1530</name>
+                <styleUrl>#style_2</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2012449944,-9.6365629885,0.0000000000 143.2815642920,-9.5013381330,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1445</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2497636586,-9.6532324283,0.0000000000 143.3416477989,-9.4985488086,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1360</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2505101253,-9.6534888900,0.0000000000 143.3425722066,-9.4985058938,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1275</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2512565929,-9.6537453521,0.0000000000 143.3434966158,-9.4984629789,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1190</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2520030612,-9.6540018144,0.0000000000 143.3444210263,-9.4984200640,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1105</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2527495302,-9.6542582769,0.0000000000 143.3453454382,-9.4983771489,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P1020</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2534960001,-9.6545147398,0.0000000000 143.3457760842,-9.4991654684,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P935</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2542424708,-9.6547712029,0.0000000000 143.3460121385,-9.5002813740,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P850</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2549889422,-9.6550276663,0.0000000000 143.3462368025,-9.5014164542,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P765</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2557354144,-9.6552841299,0.0000000000 143.3464272332,-9.5026091639,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P680</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2564818874,-9.6555405938,0.0000000000 143.3465912191,-9.5038463914,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P595</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2572283612,-9.6557970580,0.0000000000 143.3467346984,-9.5051181399,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P510</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2579748357,-9.6560535225,0.0000000000 143.3468452406,-9.5064453353,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P425</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2587213111,-9.6563099872,0.0000000000 143.3469182865,-9.5078356527,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P340</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2594677872,-9.6565664522,0.0000000000 143.3469576142,-9.5092827315,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P255</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2602142641,-9.6568229174,0.0000000000 143.3469565887,-9.5107977411,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P170</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2609607418,-9.6570793829,0.0000000000 143.3469065376,-9.5123952807,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_P85</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2617072202,-9.6573358487,0.0000000000 143.3467913034,-9.5141025502,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_CL</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2624536995,-9.6575923148,0.0000000000 143.3466019524,-9.5159345885,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S85</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2632001795,-9.6578487811,0.0000000000 143.3463220385,-9.5179190806,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S170</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2639466603,-9.6581052477,0.0000000000 143.3460329892,-9.5199189492,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S255</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2646931419,-9.6583617146,0.0000000000 143.3456122470,-9.5221405103,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S340</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3310373850,-9.5481894323,0.0000000000 143.3450101340,-9.5246673923,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S425</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3308481210,-9.5485080443,0.0000000000 143.2654396240,-9.6586181813,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S510</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3333149960,-9.5458684963,0.0000000000 143.3440882770,-9.5277325343,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S595</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3317453540,-9.5485108643,0.0000000000 143.2661861070,-9.6588746493,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S680</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3363529820,-9.5422675391,0.0000000000 143.3424050579,-9.5320793618,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S765</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3326425889,-9.5485136839,0.0000000000 143.2985400618,-9.6059231110,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S850</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2669325913,-9.6591311168,0.0000000000 143.2908490851,-9.6188700695,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S935</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3335398247,-9.5485165039,0.0000000000 143.3002149853,-9.6046166779,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1020</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2676790761,-9.6593875848,0.0000000000 143.2905600704,-9.6208697430,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1105</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3344312221,-9.5485291547,0.0000000000 143.3015198253,-9.6039332604,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1190</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2684255616,-9.6596440530,0.0000000000 143.2910719474,-9.6215211954,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1275</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3350095300,-9.5490688663,0.0000000000 143.3027665185,-9.6033477285,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1360</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2691720480,-9.6599005213,0.0000000000 143.2915837786,-9.6221727255,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1445</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3355878390,-9.5496085773,0.0000000000 143.3039646526,-9.6028439443,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1530</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2699185350,-9.6601569903,0.0000000000 143.2920956565,-9.6228241782,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1615</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3361661470,-9.5501482893,0.0000000000 143.3051042375,-9.6024387262,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1700</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2706650230,-9.6604134593,0.0000000000 143.2924592138,-9.6237253125,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1785</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3367444570,-9.5506880023,0.0000000000 143.3063673040,-9.6018256406,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1870</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2714115110,-9.6606699283,0.0000000000 143.2926761616,-9.6248732486,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S1955</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3373227660,-9.5512277153,0.0000000000 143.3076543268,-9.6011722295,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2040</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2721580010,-9.6609263983,0.0000000000 143.2929062433,-9.6259990735,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2125</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3379010760,-9.5517674283,0.0000000000 143.3088090375,-9.6007415598,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2210</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2729044910,-9.6611828683,0.0000000000 143.2933672934,-9.6267360884,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2295</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3384793860,-9.5523071413,0.0000000000 143.3099111193,-9.6003994889,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2380</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2736509820,-9.6614393383,0.0000000000 143.2939651503,-9.6272428072,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2465</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3390576970,-9.5528468553,0.0000000000 143.3109959050,-9.6000865371,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2550</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2743974740,-9.6616958083,0.0000000000 143.2946503729,-9.6276024568,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2635</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3396360080,-9.5533865693,0.0000000000 143.3120485506,-9.5998276954,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2720</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2751439660,-9.6619522793,0.0000000000 143.2954576946,-9.6277565698,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2805</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3402143190,-9.5539262833,0.0000000000 143.3131012427,-9.5995687769,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2890</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2758904600,-9.6622087503,0.0000000000 143.2967981332,-9.6270132452,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S2975</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3407926310,-9.5544659983,0.0000000000 143.3140776738,-9.5994382400,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3060</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2766369540,-9.6624652213,0.0000000000 143.2975381639,-9.6272806381,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3145</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3413709430,-9.5550057133,0.0000000000 143.3150313979,-9.5993459298,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3230</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2773834490,-9.6627216923,0.0000000000 143.2982892494,-9.6275294237,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3315</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3419492550,-9.5555454283,0.0000000000 143.3159860018,-9.5992521417,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3400</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2781299440,-9.6629781643,0.0000000000 143.2991110502,-9.6276591700,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3485</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3425275680,-9.5560851443,0.0000000000 143.3169960109,-9.5990650875,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3570</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2788764410,-9.6632346363,0.0000000000 143.3000054633,-9.6276666834,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3655</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3431058810,-9.5566248603,0.0000000000 143.3180060199,-9.5988780341,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3740</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2796229380,-9.6634911083,0.0000000000 143.3009729061,-9.6275512654,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3825</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3436841940,-9.5571645763,0.0000000000 143.3190159839,-9.5986910600,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3910</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2803694360,-9.6637475813,0.0000000000 143.3020026473,-9.6273309783,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S3995</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3442625080,-9.5577042933,0.0000000000 143.3199392357,-9.5986500616,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4080</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2811159350,-9.6640040533,0.0000000000 143.3030587521,-9.6270663140,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4165</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3448408220,-9.5582440103,0.0000000000 143.3207467768,-9.5988038507,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4250</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2818624340,-9.6642605263,0.0000000000 143.3041460290,-9.6267491776,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4335</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3454191370,-9.5587837273,0.0000000000 143.3215542726,-9.5989577178,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4420</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2826089350,-9.6645170003,0.0000000000 143.3051330849,-9.6266007536,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4505</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3459974510,-9.5593234453,0.0000000000 143.3223618143,-9.5991115087,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4590</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2833554360,-9.6647734733,0.0000000000 143.3061072850,-9.6264739736,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4675</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3465757670,-9.5598631633,0.0000000000 143.3232318842,-9.5991600433,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4760</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2841019380,-9.6650299473,0.0000000000 143.3070606725,-9.6263822289,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4845</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3471540820,-9.5604028813,0.0000000000 143.3241339117,-9.5991547834,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S4930</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2848484400,-9.6652864213,0.0000000000 143.3080085581,-9.6262997503,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5015</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3477323980,-9.5609426003,0.0000000000 143.3249495953,-9.5992948744,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5100</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2855949440,-9.6655428963,0.0000000000 143.3092612740,-9.6257041356,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5185</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3483107140,-9.5614823193,0.0000000000 143.3257136218,-9.5995219272,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5270</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2863414480,-9.6657993703,0.0000000000 143.3105358679,-9.6250716979,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5355</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3488890310,-9.5620220383,0.0000000000 143.3263934322,-9.5998907485,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5440</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2870879530,-9.6660558453,0.0000000000 143.3118126350,-9.6244356033,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5525</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3494673480,-9.5625617583,0.0000000000 143.3268957918,-9.6005582896,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5610</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2878344590,-9.6663123203,0.0000000000 143.3130829292,-9.6238104108,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5695</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3500456650,-9.5631014783,0.0000000000 143.3274148467,-9.6011977261,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5780</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2885809660,-9.6665687963,0.0000000000 143.3143368511,-9.6232127809,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5865</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3506239830,-9.5636411983,0.0000000000 143.3281512660,-9.6014712580,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S5950</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2893274730,-9.6668252723,0.0000000000 143.3155907744,-9.6226151536,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6035</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3512023010,-9.5641809193,0.0000000000 143.3288876847,-9.6017447907,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6120</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2900739810,-9.6670817483,0.0000000000 143.3169459375,-9.6218471068,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6205</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3517806194,-9.5647206403,0.0000000000 143.3293935143,-9.6024064938,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6290</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2908204902,-9.6673382242,0.0000000000 143.3181935266,-9.6212601493,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6375</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3523589380,-9.5652603613,0.0000000000 143.3293217105,-9.6040405683,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6545</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2919689510,-9.6669180753,0.0000000000 143.3192429615,-9.6210067481,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6630</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3529372570,-9.5658000833,0.0000000000 143.3275241202,-9.6085797788,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6715</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2944013830,-9.6643365523,0.0000000000 143.3208269257,-9.6198535347,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6800</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3535155770,-9.5663398053,0.0000000000 143.2968338290,-9.6617550163,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6885</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2992662880,-9.6591734664,0.0000000000 143.3540938966,-9.5668795276,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S6970</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3016987601,-9.6565919022,0.0000000000 143.3546722168,-9.5674192502,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7055</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3041312454,-9.6540103240,0.0000000000 143.3552505373,-9.5679589732,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7140</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3065637439,-9.6514287317,0.0000000000 143.3558288582,-9.5684986965,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7225</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3089962556,-9.6488471255,0.0000000000 143.3564071794,-9.5690384202,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7310</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3114287806,-9.6462655052,0.0000000000 143.3569855010,-9.5695781441,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7395</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3138613187,-9.6436838709,0.0000000000 143.3575638230,-9.5701178684,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7480</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3162938701,-9.6411022226,0.0000000000 143.3581421453,-9.5706575931,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7565</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3187264346,-9.6385205602,0.0000000000 143.3587204679,-9.5711973181,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7650</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3211590124,-9.6359388839,0.0000000000 143.3592987909,-9.5717370434,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7735</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3235916034,-9.6333571935,0.0000000000 143.3598771143,-9.5722767690,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7820</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3260242076,-9.6307754890,0.0000000000 143.3604554380,-9.5728164950,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7905</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3284568251,-9.6281937706,0.0000000000 143.3610337621,-9.5733562213,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S7990</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3308894557,-9.6256120381,0.0000000000 143.3616120865,-9.5738959479,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8075</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3333220996,-9.6230302916,0.0000000000 143.3621904113,-9.5744356749,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8160</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3357547567,-9.6204485310,0.0000000000 143.3627687365,-9.5749754022,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8245</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3381874270,-9.6178667565,0.0000000000 143.3633470620,-9.5755151298,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8330</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3406201105,-9.6152849679,0.0000000000 143.3639253879,-9.5760548577,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8415</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3430528073,-9.6127031652,0.0000000000 143.3645037141,-9.5765945860,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8500</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3454855172,-9.6101213486,0.0000000000 143.3650820406,-9.5771343146,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8585</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3479182404,-9.6075395179,0.0000000000 143.3656603676,-9.5776740436,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8670</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3503509768,-9.6049576732,0.0000000000 143.3662386948,-9.5782137729,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8755</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3527837265,-9.6023758144,0.0000000000 143.3668170225,-9.5787535025,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8840</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3552164894,-9.5997939416,0.0000000000 143.3673953505,-9.5792932325,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S8925</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3576492655,-9.5972120548,0.0000000000 143.3679736788,-9.5798329627,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S9010</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3600820548,-9.5946301539,0.0000000000 143.3685520075,-9.5803726933,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S9095</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3625148573,-9.5920482390,0.0000000000 143.3691303366,-9.5809124243,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S9180</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3649476731,-9.5894663100,0.0000000000 143.3697086660,-9.5814521556,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S9265</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3673805021,-9.5868843670,0.0000000000 143.3702869958,-9.5819918872,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_S9350</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.3698133444,-9.5843024100,0.0000000000 143.3708653259,-9.5825316191,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW1</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2871102149,-9.5010806684,0.0000000000 143.3166893185,-9.4997074843,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW2</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2871463295,-9.5018480429,0.0000000000 143.3167254974,-9.5004748403,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW3</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2871824446,-9.5026154173,0.0000000000 143.3167616769,-9.5012421961,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW4</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2872185603,-9.5033827917,0.0000000000 143.3167978569,-9.5020095519,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW5</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2872546766,-9.5041501660,0.0000000000 143.3168340376,-9.5027769077,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW6</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2872907934,-9.5049175402,0.0000000000 143.3168702188,-9.5035442633,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW7</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2849245995,-9.5058048311,0.0000000000 143.3145041579,-9.5044317346,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW8</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2849607123,-9.5065722067,0.0000000000 143.3145403350,-9.5051990916,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW9</name>
+                <styleUrl>#style_3</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2849968256,-9.5073395822,0.0000000000 143.3145765127,-9.5059664485,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW10</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2850329395,-9.5081069576,0.0000000000 143.3146126910,-9.5067338054,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+            <Placemark>
+                <name>Block_E_EW11</name>
+                <styleUrl>#style_1</styleUrl>
+                <LineString>
+                    <altitudeMode>absolute</altitudeMode>
+                    <coordinates>143.2850690539,-9.5088743330,0.0000000000 143.3146488699,-9.5075011622,0.0000000000</coordinates>
+                </LineString>
+            </Placemark>
+        </Folder>
+        <Style id="style_1">
+            <LineStyle>
+                <color>FF0000FF</color>
+                <width>1</width>
+            </LineStyle>
+        </Style>
+        <Style id="style_2">
+            <LineStyle>
+                <color>FF00FFFF</color>
+                <width>1</width>
+            </LineStyle>
+        </Style>
+        <Style id="style_3">
+            <LineStyle>
+                <color>FFFF0000</color>
+                <width>1</width>
+            </LineStyle>
+        </Style>
+    </Document>
+</kml>
