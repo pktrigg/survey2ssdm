@@ -23,6 +23,20 @@
 # create track points with timestamps so we can spatially georeference SVP data
 
 
+# DELPH INS Navigation export
+#
+# date: Date of validity (yyyy/mm/dd)
+# time: Time of validity (hh:mm:ss.ssss)
+# latitude: Latitude, decimal degree
+# longitude: Longitude, decimal degree
+# ellipsoidHeight: Height, meter positive upward
+# heading: Heading, degree
+# roll: Roll, degree
+# pitch: Pitch, degree
+# heave: Heave, meter positive upward
+#
+#date	time	latitude	longitude	ellipsoidHeight	heading	roll	pitch	heave
+
 
 import sys
 import time

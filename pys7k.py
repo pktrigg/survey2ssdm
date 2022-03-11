@@ -255,6 +255,8 @@ class s7kreader:
 	def moreData(self):
 		bytesRemaining = self.fileSize - self.fileptr.tell()
 		# print ("current file ptr position:", self.fileptr.tell())
+		bytesRemaining = max(bytesRemaining,0)
+
 		return bytesRemaining
 
 	###############################################################################
