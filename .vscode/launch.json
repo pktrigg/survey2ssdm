@@ -9,8 +9,8 @@
 			// "program": "${file}",
 			"program": "survey2ssdm.py",
 			"python": "c:/python/python.exe",
-			"args": ["-i", "C:/ggtools/survey2ssdm"]
+			"args": ["-i", "Y:/Subsea-Cloud/P21050NEOM/FromClient/HistoricalBathymetry/OceanX/20220501GoogleDrive/Acoustics/KnudsenSBP", "-reprocess"]
 		}
 	]
 }
-// "args": ["-i", "C:/ggtools/survey2ssdm"]
+// "args": ["-i", "C:/sampledata"]

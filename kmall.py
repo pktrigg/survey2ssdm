@@ -401,6 +401,81 @@ class kmallreader:
 		return navigation
 
 ###############################################################################
+	def loadattitude(self):
+		'''loads all the attitude into list'''
+		attitude		= []
+		lastimestamp 	= 0
+		self.rewind()
+		while self.moreData():
+			try:
+				# print(self.fileptr.tell())
+				typeofdatagram, datagram = self.readDatagram()
+				if (typeofdatagram == 'CORRUPT'):
+					#we have seen corrupt kmall files when sis crashes.
+					self.rewind()
+					return attitude
+
+				if (typeofdatagram == '#SKM'):
+					datagram.read()
+					for sample in datagram.data:
+						timestamp = (sample[3] + sample[4]/1000000000)
+						# print (from_timestamp(timestamp), sample[4]/1000000000)
+						#time, roll, pitch, heave
+						attitude.append([timestamp, sample[9], sample[10], sample[12]])
+			except:
+				e = sys.exc_info()[0]
+				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
+		self.rewind()
+		return attitude
+
+###############################################################################
+	def loadpingnavigation(self):
+		'''loads all the navigation from the PING into list so we can save as ASCII and inject into CARIS'''
+		pingnavigation 					= []
+		lastimestamp = 0
+		self.rewind()
+		
+		while self.moreData():
+			try:
+				# print(self.fileptr.tell())
+				typeofdatagram, datagram = self.readDatagram()
+				if (typeofdatagram == 'CORRUPT'):
+					#we have seen corrupt kmall files when sis crashes.
+					self.rewind()
+					return pingnavigation
+
+				if (typeofdatagram == '#MRZ'):
+					datagram.read()
+					# trap bad values
+					if datagram.latitude < -90:
+						continue
+					if datagram.latitude > 90:
+						continue
+					if datagram.longitude < -180:
+						continue
+					if datagram.longitude > 180:
+						continue
+					# DELPH INS Navigation export
+					#
+					# date: Date of validity (yyyy/mm/dd)
+					# time: Time of validity (hh:mm:ss.ssss)
+					# latitude: Latitude, decimal degree
+					# longitude: Longitude, decimal degree
+					# ellipsoidHeight: Height, meter positive upward
+					# heading: Heading, degree
+					# roll: Roll, degree
+					# pitch: Pitch, degree
+					# heave: Heave, meter positive upward
+
+					pingnavigation.append([to_timestamp(datagram.date), datagram.latitude, datagram.longitude, datagram.ellipsoidHeightReRefPoint_m, datagram.heading, 0.0, 0.0, 0.0])
+					lastimestamp = self.recordTime
+			except:
+				e = sys.exc_info()[0]
+				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
+		self.rewind()
+		return pingnavigation
+
+###############################################################################
 	def getDatagramName(self, typeofdatagram):
 		'''Convert the datagram type from the code to a user readable string.  Handy for displaying to the user'''
 		#Multibeam Data

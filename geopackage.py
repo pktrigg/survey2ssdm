@@ -267,7 +267,7 @@ def adddefaultsrsrecords(conn):
 	'''create default srs records as per ogc specification'''
 	cur = conn.cursor()
 
-	sql = """INSERT INTO "main"."gpkg_spatial_ref_sys" (
+	sql = """INSERT OR IGNORE INTO "main"."gpkg_spatial_ref_sys" (
 		"srs_name",
 		"srs_id",
 		"organization",
@@ -287,7 +287,7 @@ def adddefaultsrsrecords(conn):
 	except Error as e:
 		print(e)
 
-	sql = """INSERT INTO "main"."gpkg_spatial_ref_sys" (
+	sql = """INSERT OR IGNORE INTO "main"."gpkg_spatial_ref_sys" (
 		"srs_name",
 		"srs_id",
 		"organization",
@@ -308,7 +308,7 @@ def adddefaultsrsrecords(conn):
 		print(e)
 
 	sql = """
-	INSERT INTO 'main'.'gpkg_spatial_ref_sys' (
+	INSERT OR IGNORE INTO 'main'.'gpkg_spatial_ref_sys' (
 		'srs_name',
 		'srs_id',
 		'organization',
@@ -340,7 +340,7 @@ def addsrsrecord(conn, name="WGS84", epsg=4326):
 	'''add a new srs record to the gpkg'''
 	cur = conn.cursor()
 
-	sql = """INSERT INTO "main"."gpkg_spatial_ref_sys" (
+	sql = """INSERT OR IGNORE INTO "main"."gpkg_spatial_ref_sys" (
 		"srs_name",
 		"srs_id",
 		"organization",
@@ -364,7 +364,7 @@ def addsrsrecord(conn, name="WGS84", epsg=4326):
 def addgeometryrecord(conn, tablename, vectortype, srsid):
 	'''create the geopackage geometry table which contains a list of layers and the srs for each'''
 	cur = conn.cursor()
-	sql = """INSERT INTO "main"."gpkg_geometry_columns" (
+	sql = """INSERT OR IGNORE INTO "main"."gpkg_geometry_columns" (
 		"table_name",
 		"column_name",
 		"geometry_type_name",
@@ -396,7 +396,7 @@ def createvectortable(connection, tablename, envelope, type, fields, srsid=4326)
 		fieldstr += "'" + f[0] + "' " + f[1] + ", "
 	fieldstr += "'geom'" + type
 	fieldstr += ")"
-	sql = "CREATE TABLE " + tablename + fieldstr
+	sql = "CREATE TABLE if not exists " + tablename + fieldstr
 	# sql = "CREATE TABLE " + tablename + """( "fid" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "geom" POINT)"""
 
 	try:
@@ -412,7 +412,7 @@ def	addtabletocontents(conn, tablename, envelope, srsid):
 	cur = conn.cursor()
 	filter = ""
 	lastchange = ""
-	sql = "INSERT INTO gpkg_contents VALUES (?,?,?,?,?,?,?,?,?,?)"
+	sql = "INSERT OR IGNORE INTO gpkg_contents VALUES (?,?,?,?,?,?,?,?,?,?)"
 	v = (tablename, "features", tablename, filter, lastchange, envelope[0], envelope[1], envelope[2], envelope[3], srsid)
 	# v = (tablename, "features", tablename, filter, lastchange, min_x, min_y, max_x, max_y, srsid)
 	try:
