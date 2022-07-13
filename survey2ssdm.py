@@ -292,9 +292,12 @@ def process7k(filename, outfilename, step):
 ################################################################################
 def processsegy(filename, outfilename, step):
 	#now read the kmall file and return the navigation table filename
-
+	navigation = []
 	# print("Loading sgy Navigation...")
 	r = segyreader(filename)
+	if (r.fileSize == 0):
+		# the file is a corrupt empty file so skip
+		return navigation
 	r.readHeader()
 	navigation = r.loadNavigation()
 	r.close()
@@ -419,17 +422,28 @@ def mp_processsegy(args, gpkg, geo):
 		else:
 			boundarytasks.append([filename, outfilename])
 
-	multiprocesshelper.log("New sgy Files to Import: %d" %(len(boundarytasks)))		
-	cpu = multiprocesshelper.getcpucount(args.cpu)
-	multiprocesshelper.log("Extracting SGY Navigation with %d CPU's" %(cpu))
-	pool = mp.Pool(cpu)
-	multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
-	poolresults = [pool.apply_async(processsegy, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
-	pool.close()
-	pool.join()
-	for idx, result in enumerate (poolresults):
-		results.append([boundarytasks[idx][0], result._value])
-		# print (result._value)
+	if args.cpu == '1':
+		for filename in matches:
+			root = os.path.splitext(filename)[0]
+			root = os.path.basename(filename)
+			outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+			os.makedirs(outputfolder, exist_ok=True)
+			# makedirs(outputfolder)
+			outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+			result = processsegy(filename, outfilename, args.step)
+			results.append([filename, result])
+	else:
+		multiprocesshelper.log("New sgy Files to Import: %d" %(len(boundarytasks)))		
+		cpu = multiprocesshelper.getcpucount(args.cpu)
+		multiprocesshelper.log("Extracting SGY Navigation with %d CPU's" %(cpu))
+		pool = mp.Pool(cpu)
+		multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
+		poolresults = [pool.apply_async(processsegy, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
+		pool.close()
+		pool.join()
+		for idx, result in enumerate (poolresults):
+			results.append([boundarytasks[idx][0], result._value])
+			# print (result._value)
 
 	# now we can read the results files and create the geometry into the SSDM table
 	multiprocesshelper.log("Files to Import to geopackage: %d" %(len(results)))		
@@ -540,18 +554,28 @@ def mp_processKMALL(args, gpkg, geo):
 		else:
 			boundarytasks.append([filename, outfilename])
 
-	multiprocesshelper.log("New kmall Files to Import: %d" %(len(boundarytasks)))		
-	cpu = multiprocesshelper.getcpucount(args.cpu)
-	multiprocesshelper.log("Extracting KMALL Navigation with %d CPU's" %(cpu))
-	pool = mp.Pool(cpu)
-	multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
-	# poolresults = [pool.apply_async(processKMALL, (task[0], task[1], args.step)) for task in boundarytasks]
-	poolresults = [pool.apply_async(processKMALL, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
-	pool.close()
-	pool.join()
-	for idx, result in enumerate (poolresults):
-		results.append([boundarytasks[idx][0], result._value])
-		# print (result._value)
+	if args.cpu == '1':
+		for filename in matches:
+			root = os.path.splitext(filename)[0]
+			root = os.path.basename(filename)
+			outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+			os.makedirs(outputfolder, exist_ok=True)
+			outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+			result = processKMALL(filename, outfilename, args.step)
+			results.append([filename, result])			
+	else:
+		multiprocesshelper.log("New kmall Files to Import: %d" %(len(boundarytasks)))		
+		cpu = multiprocesshelper.getcpucount(args.cpu)
+		multiprocesshelper.log("Extracting KMALL Navigation with %d CPU's" %(cpu))
+		pool = mp.Pool(cpu)
+		multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
+		# poolresults = [pool.apply_async(processKMALL, (task[0], task[1], args.step)) for task in boundarytasks]
+		poolresults = [pool.apply_async(processKMALL, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
+		pool.close()
+		pool.join()
+		for idx, result in enumerate (poolresults):
+			results.append([boundarytasks[idx][0], result._value])
+			# print (result._value)
 
 	# now we can read the results files and create the geometry into the SSDM table
 	multiprocesshelper.log("Files to Import to geopackage: %d" %(len(results)))		
@@ -580,6 +604,7 @@ def createTrackLine(filename, navigation, linestringtable, step, geo, surveyname
 
 	if navigation is None: #trap out empty files.
 		return
+	print(filename)
 	if len(navigation) == 0: #trap out empty files.
 		print("file is empty: %s" % (filename))
 		return

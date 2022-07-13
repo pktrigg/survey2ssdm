@@ -24,6 +24,9 @@ import numpy as np
 from argparse import ArgumentParser
 from datetime import datetime, timedelta
 
+# from sqlalchemy import false
+import timeseries
+
 ###########################################################################
 def main():
 	parser = ArgumentParser(description='Read a KMALL file.')
@@ -44,8 +47,9 @@ def main():
 			process(file)
 	except:
 		#open the ALL file for reading by creating a new kmallreader class and passin in the filename to open.
-		filename =   "C:/development/python/kmall/0006_20170705_093920_Pingeline.kmall"
-		process(filename)
+		filename =   "C:/sampledata/kmall/B_S2980_3005_20220220_084910.kmall"
+		extract2timeseries(filename)
+		# process(filename)
 
 ###############################################################################
 ###############################################################################
@@ -65,6 +69,46 @@ def findFiles2(recursive, filespec, filter):
 	# 	print ("Nothing found to convert, quitting")
 		# exit()
 	return mclean
+
+###############################################################################
+def extract2timeseries(filename):
+	'''something like this will create a list of x,y,z,r,p,h for each ping time...'''
+
+	import timeseries as ts
+
+	r = kmallreader(filename)
+
+	print("load the attitude to lists...")
+	attitude = r.loadattitude()
+	print("load the ping header data to lists...")
+	pings = r.loadpingnavigation()
+
+	# convert the attitudes into time series so we can interpolate
+	timestamps = [i[0] for i in attitude]
+	list_x = [i[1] for i in attitude]
+	list_y = [i[2] for i in attitude]
+	list_z = [i[3] for i in attitude]
+	list_roll = [i[4] for i in attitude]
+	list_pitch = [i[5] for i in attitude]
+	list_heading = [i[6] for i in attitude]
+	
+	csx = ts.cTimeSeries(timestamps, list_x)
+	csy = ts.cTimeSeries(timestamps, list_y)
+	csz = ts.cTimeSeries(timestamps, list_z)
+	csroll = ts.cTimeSeries(timestamps, list_roll)
+	cspitch = ts.cTimeSeries(timestamps, list_pitch)
+	csheading = ts.cTimeSeries(timestamps, list_heading)
+
+	# now interpolate
+	for p in pings:
+		x = csx.getValueAt(p[0])
+		y = csy.getValueAt(p[0])
+		z = csz.getValueAt(p[0])
+		roll = csroll.getValueAt(p[0])
+		pitch = cspitch.getValueAt(p[0])
+		heading = csheading.getValueAt(p[0])
+		
+		print(p[0],x,y,z,roll,pitch,heading)
 
 ############################################################
 def process(filename):
@@ -420,8 +464,8 @@ class kmallreader:
 					for sample in datagram.data:
 						timestamp = (sample[3] + sample[4]/1000000000)
 						# print (from_timestamp(timestamp), sample[4]/1000000000)
-						#time, roll, pitch, heave
-						attitude.append([timestamp, sample[9], sample[10], sample[12]])
+						#time, x, y, z, roll, pitch, heading
+						attitude.append([timestamp, sample[6], sample[7], sample[8], sample[9], sample[10], sample[11]])
 			except:
 				e = sys.exc_info()[0]
 				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
@@ -445,7 +489,7 @@ class kmallreader:
 					return pingnavigation
 
 				if (typeofdatagram == '#MRZ'):
-					datagram.read()
+					datagram.read(True)
 					# trap bad values
 					if datagram.latitude < -90:
 						continue
@@ -785,7 +829,7 @@ class RANGEDEPTH:
 		self.fileptr.seek(numberofbytes, 1)	 # move the file pointer to the end of the record so we can skip as the default actions
 		self.data = ""
 
-	def read(self):
+	def read(self, headeronly=False):
 		self.fileptr.seek(self.offset, 0)# move the file pointer to the start of the record so we can read from disc
 		rec_fmt = kmallreader.EMdgmHeader_def
 		rec_len = struct.calcsize(rec_fmt)
@@ -880,6 +924,10 @@ class RANGEDEPTH:
 		self.longitude									= s[46]
 		self.ellipsoidHeightReRefPoint_m				= s[47]
 
+		if headeronly:
+			# reset the file pointer to the end of the packet.  for some reasdon we are 4 bytes out??? pkpk
+			self.fileptr.seek(self.offset + self.numberofbytes, 0)
+			return
 
 		for i in range(self.numTxSectors):
 			EMdgmMRZ_txSectorInfo_def = "=4B7f2BH"
