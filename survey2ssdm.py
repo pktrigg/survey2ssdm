@@ -58,6 +58,7 @@ import pyproj
 from py7k import s7kreader
 from pyjsf import jsfreader
 from segyreader import segyreader
+#from pygsf import GSFREADER
 import readkml
 
 # local from the shared area...
@@ -172,6 +173,9 @@ def process(args):
 
 	# process any and all SEGY files
 	mp_processsegy(args, gpkg, geo)
+
+	# process any and all GSF files
+	# mp_processgsf(args, gpkg, geo)
 
 	print("Completed creation of SSDM tracks to: %s" %(args.outputFilename))
 
@@ -290,6 +294,24 @@ def process7k(filename, outfilename, step):
 	return(navigation)
 
 ################################################################################
+'''
+def processgsf(filename, outfilename, step):
+	#now read the kmall file and return the navigation table filename
+	navigation = []
+	# print("Loading sgy Navigation...")
+	r = GSFREADER(filename)
+	if (r.fileSize == 0):
+		# the file is a corrupt empty file so skip
+		return navigation
+	navigation = r.loadnavigation()
+	r.close()
+
+	with open(outfilename,'w') as f:
+		json.dump(navigation, f)
+	
+	return(navigation)
+'''
+################################################################################
 def processsegy(filename, outfilename, step):
 	#now read the kmall file and return the navigation table filename
 	navigation = []
@@ -382,6 +404,78 @@ def mp_process7k(args, gpkg, geo):
 		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
 		multiprocesshelper.mpresult("")
 
+################################################################################
+'''
+def mp_processgsf(args, gpkg, geo):
+
+	# boundary = []
+	boundarytasks = []
+	results = []
+
+	rawfolder = os.path.join(args.inputfolder, ssdmfieldvalue.readvalue("MBES_RAW_FOLDER"))
+	if not os.path.isdir(rawfolder):
+		rawfolder = args.inputfolder
+
+	# rawfilename = ssdmfieldvalue.readvalue("MBES_RAW_FILENAME")
+
+	matches = fileutils.findFiles2(True, rawfolder, "*.gsf")
+
+	# surveyname = os.path.basename(args.inputfolder) #this folder should be the survey NAME
+
+	#create the linestring table for the trackplot
+	type, fields = geopackage_ssdm.createSurveyTracklineSSDM()
+	linestringtable = geopackage.vectortable(gpkg.connection, "SurveyTrackLine", args.epsg, type, fields)
+
+	for filename in matches:
+		root = os.path.splitext(filename)[0]
+		root = os.path.basename(filename)
+		outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+		os.makedirs(outputfolder, exist_ok=True)
+		# makedirs(outputfolder)
+		outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+		if args.reprocess:
+			if os.path.exists(outfilename):
+				os.unlink(outfilename)
+		if os.path.exists(outfilename):
+			# the cache file exists so load it
+			with open(outfilename) as f:
+				# print("loading file %s" %(outfilename))
+				lst = json.load(f)
+				results.append([filename, lst])
+		else:
+			boundarytasks.append([filename, outfilename])
+
+	if args.cpu == '1':
+		for filename in matches:
+			root = os.path.splitext(filename)[0]
+			root = os.path.basename(filename)
+			outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+			os.makedirs(outputfolder, exist_ok=True)
+			# makedirs(outputfolder)
+			outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+			result = processgsf(filename, outfilename, args.step)
+			results.append([filename, result])
+	else:
+		multiprocesshelper.log("New sgy Files to Import: %d" %(len(boundarytasks)))		
+		cpu = multiprocesshelper.getcpucount(args.cpu)
+		multiprocesshelper.log("Extracting SGY Navigation with %d CPU's" %(cpu))
+		pool = mp.Pool(cpu)
+		multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
+		poolresults = [pool.apply_async(processgsf, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
+		pool.close()
+		pool.join()
+		for idx, result in enumerate (poolresults):
+			results.append([boundarytasks[idx][0], result._value])
+			# print (result._value)
+
+	# now we can read the results files and create the geometry into the SSDM table
+	multiprocesshelper.log("Files to Import to geopackage: %d" %(len(results)))		
+
+	multiprocesshelper.g_procprogress.setmaximum(len(results))
+	for result in results:
+		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
+		multiprocesshelper.mpresult("")
+'''
 ################################################################################
 def mp_processsegy(args, gpkg, geo):
 
@@ -605,10 +699,12 @@ def createTrackLine(filename, navigation, linestringtable, step, geo, surveyname
 	if navigation is None: #trap out empty files.
 		return
 	print(filename)
-	if len(navigation) == 0: #trap out empty files.
-		print("file is empty: %s" % (filename))
+	try:
+		if len(navigation) == 0: #trap out empty files.
+			print("file is empty: %s" % (filename))
+			return
+	except:
 		return
-
 	prevX =  navigation[0][longitudeIDX]
 	prevY = navigation[0][latitudeIDX]
 
