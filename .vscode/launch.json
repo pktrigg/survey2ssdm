@@ -6,8 +6,8 @@
 			"type": "python",
 			"request": "launch",
 			"stopOnEntry": false,
-			// "program": "${file}",
-			"program": "survey2ssdm.py",
+			"program": "${file}",
+			// "program": "survey2ssdm.py",
 			"python": "c:/python/python.exe",
 			"args": ["-i", "Y:/Subsea-Cloud/P21050NEOM/FromClient/HistoricalBathymetry/OceanX/20220501GoogleDrive/Acoustics/EM712/temp", "-reprocess", "-cpu", "1"]
 		}
