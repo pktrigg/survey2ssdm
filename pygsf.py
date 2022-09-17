@@ -101,6 +101,10 @@ def testreader():
 	filename = "C:/sampledata/gsf/IDN-ME-SR23_1-P-B46-01-CL_1075_20220530_112406.gsf"
 	filename = "C:/sampledata/gsf/IDN-ME-SR23_1-RD14-B46-S200_0565_20220605_134739.gsf"
 	# filename = "C:/sampledata/gsf/20220512_182628_1_Hydro2_P21050_NEOM.gsf"
+
+	filename = "C:/sampledata/gsf/IDN-ME-SR23_1-PH-B46-093_0207_20220602_050243.gsf"
+
+
 	print (filename)
 	pingcount = 0
 	# create a GSFREADER class and pass the filename
