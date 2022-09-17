@@ -1,23 +1,23 @@
 #name:			pygsf
 #created:		July 2017
-#by:			p.kennedy@fugro.com
+#by:			p.kennedy@guardiangeomatics.com
 #description:	python module to read and write a Generic Sensor Formaty (GSF) file natively
 #notes:			See main at end of script for example how to use this
 #based on GSF Version 3.05
 
 # See readme.md for more details
 # # Record Decriptions (See page 82)
-# HEADER 									= 1
+# HEADER 								= 1
 # SWATH_BATHYMETRY						= 2
-# SOUND_VELOCITY_PROFILE					= 3
+# SOUND_VELOCITY_PROFILE				= 3
 # PROCESSING_PARAMETERS					= 4
 # SENSOR_PARAMETERS						= 5
-# COMMENT									= 6
-# HISTORY									= 7
+# COMMENT								= 6
+# HISTORY								= 7
 # NAVIGATION_ERROR						= 8
-# SWATH_BATHY_SUMMARY						= 9
+# SWATH_BATHY_SUMMARY					= 9
 # SINGLE_BEAM_SOUNDING					= 10
-# HV_NAVIGATION_ERROR						= 11
+# HV_NAVIGATION_ERROR					= 11
 # ATTITUDE								= 12
 
 import os.path
@@ -30,13 +30,10 @@ import random
 from datetime import datetime
 from datetime import timedelta
 from statistics import mean
-import mmap
-# from attr import NOTHING
-
+# import mmap
+# from delivershared import log as log, makedirs
 # for testing only...
-# import matplotlib.pyplot as plt
 import numpy as np
-# from sqlalchemy import false, true
 
 #/* The high order 4 bits are used to define the field size for this array */
 GSF_FIELD_SIZE_DEFAULT  = 0x00  #/* Default values for field size are used used for all beam arrays */
@@ -72,6 +69,96 @@ ARCIdx = {100000: 0, 200000: 1, 400000: 2}
 REJECT_CLIP = -1
 REJECT_RANGE= -2
 REJECT_INTENSITY= -4
+
+
+# Subrecord Description Subrecord Identifier
+DEPTH_ARRAY							=	1
+ACROSS_TRACK_ARRAY    				=	2
+ALONG_TRACK_ARRAY    				=	3
+TRAVEL_TIME_ARRAY    				=	4
+BEAM_ANGLE_ARRAY    				=	5
+MEAN_CAL_AMPLITUDE_ARRAY  			=	6
+MEAN_REL_AMPLITUDE_ARRAY  			=	7
+ECHO_WIDTH_ARRAY    				=	8
+QUALITY_FACTOR_ARRAY    			=	9
+RECEIVE_HEAVE_ARRAY    				=	10
+DEPTH_ERROR_ARRAY			    	=	11
+ACROSS_TRACK_ERROR_ARRAY 			=  	12
+ALONG_TRACK_ERROR_ARRAY				=	13
+NOMINAL_DEPTH_ARRAY    				=	14
+QUALITY_FLAGS_ARRAY    				=	15
+BEAM_FLAGS_ARRAY    				=	16
+SIGNAL_TO_NOISE_ARRAY    			=	17
+BEAM_ANGLE_FORWARD_ARRAY    		=	18
+VERTICAL_ERROR_ARRAY    			=	19
+HORIZONTAL_ERROR_ARRAY    			=	20
+INTENSITY_SERIES_ARRAY    			=	21
+SECTOR_NUMBER_ARRAY    				=	22
+DETECTION_INFO_ARRAY    			=	23
+INCIDENT_BEAM_ADJ_ARRAY    			=	24
+SYSTEM_CLEANING_ARRAY    			=	25
+DOPPLER_CORRECTION_ARRAY    		=	26
+SONAR_VERT_UNCERTAINTY_ARRAY    	=	27
+SCALE_FACTORS     					=	100
+# SEABEAM_SPECIFIC    				=	102
+# EM12_SPECIFIC     					=	103
+# EM100_SPECIFIC    					=	104
+# EM950_SPECIFIC    					105
+# EM121A_SPECIFIC    					106
+# EM121_SPECIFIC    					107
+# SASS_SPECIFIC (To Be Replaced By CMP_SASS)    108
+# SEAMAP_SPECIFIC                       109
+# SEABAT_SPECIFIC    					110
+# EM1000_SPECIFIC    					111
+# TYPEIII_SEABEAM_SPECIFIC (To Be Replaced By CMP_SASS )    112
+# SB_AMP_SPECIFIC       				113
+# SEABAT_II_SPECIFIC    				114
+# SEABAT_8101_SPECIFIC (obsolete)     	115
+# SEABEAM_2112_SPECIFIC    				116
+# ELAC_MKII_SPECIFIC    				117
+# EM3000_SPECIFIC    					118
+# EM1002_SPECIFIC 						119
+# EM300_SPECIFIC    					120
+# CMP_SASS_SPECIFIC (To replace SASS and TYPEIII_SEABEAM)    121
+# RESON_8101_SPECIFIC           		122   
+# RESON_8111_SPECIFIC           		123   
+# RESON_8124_SPECIFIC           		124   
+# RESON_8125_SPECIFIC           		125   
+# RESON_8150_SPECIFIC           		126   
+# RESON_8160_SPECIFIC           		127   
+# EM120_SPECIFIC                		128
+# EM3002_SPECIFIC               		129
+# EM3000D_SPECIFIC                		130
+# EM3002D_SPECIFIC                		131
+# EM121A_SIS_SPECIFIC     				132
+# EM710_SPECIFIC                 		133
+# EM302_SPECIFIC                 		134
+# EM122_SPECIFIC                 		135
+# GEOSWATH_PLUS_SPECIFIC         		136  
+# KLEIN_5410_BSS_SPECIFIC         		137
+# RESON_7125_SPECIFIC     				138
+# EM2000_SPECIFIC    					139
+# EM300_RAW_SPECIFIC             		140
+# EM1002_RAW_SPECIFIC            		141
+# EM2000_RAW_SPECIFIC           		142
+# EM3000_RAW_SPECIFIC 					143
+# EM120_RAW_SPECIFIC             		144
+# EM3002_RAW_SPECIFIC            		145
+# EM3000D_RAW_SPECIFIC        			146
+# EM3002D_RAW_SPECIFIC          		147
+# EM121A_SIS_RAW_SPECIFIC       		148
+# EM2040_SPECIFIC     					149
+# DELTA_T_SPECIFIC     					150
+# R2SONIC_2022_SPECIFIC      			151
+# R2SONIC_2024_SPECIFIC     			152             
+# R2SONIC_2020_SPECIFIC     			153             
+# SB_ECHOTRAC_SPECIFIC (obsolete)       206
+# SB_BATHY2000_SPECIFIC (obsolete)      207
+# SB_MGD77_SPECIFIC (obsolete)          208
+# SB_BDB_SPECIFIC (obsolete)            209
+# SB_NOSHDB_SPECIFIC   (obsolete)       210
+# SB_PDD_SPECIFIC   (obsolete)          211
+# SB_NAVISOUND_SPECIFIC   (obsolete)    212
 ###############################################################################
 def main():
 
@@ -101,103 +188,55 @@ def testreader():
 	filename = "C:/sampledata/gsf/IDN-ME-SR23_1-P-B46-01-CL_1075_20220530_112406.gsf"
 	filename = "C:/sampledata/gsf/IDN-ME-SR23_1-RD14-B46-S200_0565_20220605_134739.gsf"
 	# filename = "C:/sampledata/gsf/20220512_182628_1_Hydro2_P21050_NEOM.gsf"
-
-	filename = "C:/sampledata/gsf/IDN-ME-SR23_1-PH-B46-093_0207_20220602_050243.gsf"
-
+	filename = "C:/sampledata/gsf/0095_20220701_033832.gsf"
+	filename = "F:/projects/ggmatch/lazgsfcomparisontest/IDN-JI-SR23_1-PH-B46-001_0000_20220419_162536.gsf"
 
 	print (filename)
 	pingcount = 0
 	# create a GSFREADER class and pass the filename
 	r = GSFREADER(filename)
 	# r.loadscalefactors()
-	r.loadnavigation()
-	r.loadattitude()
+	# navigation = r.loadnavigation()
+	# ts, roll, pitch, heave, heading = r.loadattitude()
 
-
-
-
-	# f1 = plt.figure()
-	# # f2 = plt.figure()
-	# # f3 = plt.figure()
-
-	# ax1 = f1.add_subplot(111)
-	# # ax2 = f2.add_subplot(111)
-	# # ax3 = f3.add_subplot(111)
-
-	# print ("pingcount, pingnumber, 100kHz, 200kHz, 400kHz")
 	while r.moreData():
 		# read a datagram.  If we support it, return the datagram type and aclass for that datagram
 		# The user then needs to call the read() method for the class to undertake a fileread and binary decode.  This keeps the read super quick.
 		startbyte = r.fileptr.tell()
 		numberofbytes, recordidentifier, datagram = r.readDatagram()
 		# print(recordidentifier)
-		# print(numberofbytes - r.hdrlen,recordidentifier,startbyte)
 
 		if recordidentifier == HEADER:
 			datagram.read()
-			print(datagram)
+			# print(datagram)
 		
 		if recordidentifier == SWATH_BATHY_SUMMARY:
 			datagram.read()
-			print(datagram)
+			# print(datagram)
 
 		if recordidentifier == 	COMMENT:
 			datagram.read()
-			print(datagram)
+			# print(datagram)
 
 		if recordidentifier == 	PROCESSING_PARAMETERS:
 			datagram.read()
-			print(datagram)
+			# print(datagram)
 
 		if recordidentifier == 	SOUND_VELOCITY_PROFILE:
 			datagram.read()
-			print(datagram)
+			# print(datagram)
 
-		if recordidentifier == 	ATTITUDE:
-			datagram.read()
-			r.attitudedata = np.append(r.attitudedata, datagram.attitudearray, axis=0)
+		# if recordidentifier == 	ATTITUDE:
+			# datagram.read()
+			# r.attitudedata = np.append(r.attitudedata, datagram.attitudearray, axis=0)
 
-			print(datagram)
+			# print(datagram)
 
-		
-# if recordidentifier == SWATH_BATHYMETRY:
-		# 	datagram.read()
+		if recordidentifier == SWATH_BATHYMETRY:
+			r.scalefactorsd =  datagram.read(r.scalefactorsd, False)
+			# print ( datagram.from_timestamp(datagram.timestamp), datagram.timestamp, datagram.longitude, datagram.latitude, datagram.heading, datagram.DEPTH_ARRAY[0])
 
-		# if recordidentifier == SWATH_BATHYMETRY:
-		# 	datagram.read()
-		# 	datagram.snippettype = SNIPPET_NONE
-			# print ("%s Lat:%.3f Lon:%.3f Ping:%d Freq:%d Serial %s" % (datagram.currentRecordDateTime(), datagram.latitude, datagram.longitude, datagram.pingnumber, datagram.frequency, datagram.serialnumber))
-
-			# for cross profile plotting
-			# bs = []
-			# for s in datagram.MEAN_REL_AMPLITUDE_ARRAY:
-			# 	if s != 0:
-			# 		bs.append(20 * math.log10(s) - 100)
-			# 	else:
-			# 		bs.append(0)
-
-			# bs = [20 * math.log10(s) - 100 for s in datagram.MEAN_REL_AMPLITUDE_ARRAY]
-			# samplearray = datagram.R2Soniccorrection()
-			# if datagram.frequency == 100000:
-			# 	freq100 = mean(samplearray)
-			# if datagram.frequency == 200000:
-			# 	freq200 = mean(samplearray)
-			# if datagram.frequency == 400000:
-			# 	freq400 = mean(samplearray)
-			# 	# print ("%d,%d,%.3f,%.3f,%.3f" %(pingcount, datagram.pingnumber, freq100, freq200, freq400))
-			# 	print ("%d" %(pingcount))
-			# 	pingcount += 1
-				# if len(bs) > 0:
-				# 	plt.plot(datagram.BEAM_ANGLE_ARRAY, bs, linewidth=0.25, color='blue')
-				# 	plt.ylim([-60,-5])
-				# 	plt.xlim([-60,60])
-				# 	# ax3.plot(datagram.BEAM_ANGLE_ARRAY, datagram.ALONG_TRACK_ARRAY)
-				# 	plt.pause(0.001)
-
-			# datagram.clippolar(-60, 60)
-		# r.fileptr.seek(numberofbytes, 1) # set the file ptr to the end of the record			
-
-	# print("Duration %.3fs" % (time.time() - start_time )) # time the process
+	print("Duration %.3fs" % (time.time() - start_time )) # time the process
 	# print ("PingCount:", pingcount)
 	return
 
@@ -234,7 +273,8 @@ class SWATH_BATHYMETRY_PING :
 		self.fileptr = fileptr						# remember the file pointer so we do not need to pass from the host process
 		self.fileptr.seek(numbytes, 1)				# move the file pointer to the end of the record so we can skip as the default actions
 	
-		self.scalefactors = []
+		self.scalefactorsd = {}
+		# self.scalefactors = []
 		self.DEPTH_ARRAY = []
 		self.ACROSS_TRACK_ARRAY = []
 		self.ALONG_TRACK_ARRAY = []
@@ -243,6 +283,7 @@ class SWATH_BATHYMETRY_PING :
 		self.MEAN_CAL_AMPLITUDE_ARRAY = []
 		self.MEAN_REL_AMPLITUDE_ARRAY = []
 		self.QUALITY_FACTOR_ARRAY = []
+		self.QUALITY_FLAGS_ARRAY = []
 		self.BEAM_FLAGS_ARRAY = []
 		self.BEAM_ANGLE_FORWARD_ARRAY = []
 		self.VERTICAL_ERROR_ARRAY = []
@@ -258,7 +299,158 @@ class SWATH_BATHYMETRY_PING :
 		self.frequency = 0
 
 	###############################################################################
-	def read(self, headeronly=False):
+	# def readscalefactors(self, headeronly=False):
+	# 	'''read the scale facttors
+	# 	'''
+	# 	# read ping header
+	# 	hdrfmt = '>llll5hLH3h2Hlllh'
+	# 	hdrlen = struct.calcsize(hdrfmt)
+	# 	rec_unpack = struct.Struct(hdrfmt).unpack
+
+	# 	self.fileptr.seek(self.offset + self.hdrlen, 0)   # move the file pointer to the start of the record so we can read from disc			  
+	# 	# self.fileptr.seek(self.offset + self.hdrlen , 0)   # move the file pointer to the start of the record so we can read from disc			  
+	# 	data = self.fileptr.read(hdrlen)
+	# 	s = rec_unpack(data)
+	# 	self.time 			= s[0] 
+	# 	self.pingnanotime 	= s[1] 
+	# 	self.timestamp		= self.time + (self.pingnanotime/1000000000)
+	# 	self.longitude 		= s[2] / 10000000
+	# 	self.latitude		= s[3] / 10000000
+	# 	self.numbeams 		= s[4]
+	# 	self.centrebeam 	= s[5]
+	# 	self.pingflags 		= s[6]
+	# 	self.reserved 		= s[7]
+	# 	self.tidecorrector	= s[8] / 100
+	# 	self.depthcorrector	= s[9] / 100
+	# 	self.heading		= s[10] / 100
+	# 	self.pitch			= s[11] / 100
+	# 	self.roll			= s[12] / 100
+	# 	self.heave			= s[13] / 100
+	# 	self.course			= s[14] / 100
+	# 	self.speed			= s[15] / 100
+	# 	self.height			= s[16] / 100
+	# 	self.separation		= s[17] / 100
+	# 	self.gpstidecorrector	= s[18] / 100
+	# 	self.spare			= s[19]
+
+	# 	# skip the record for performance reasons.  Very handy in some circumstances
+	# 	if headeronly:
+	# 		self.fileptr.seek(self.offset + self.numbytes, 0) #move forwards to the end of the record as we cannot trust the record length from the 2024
+	# 		return
+
+	# 	while (self.fileptr.tell() <= self.offset + self.numbytes): #dont read past the end of the packet length.  This should never happen!
+	# 		fmt = '>l'
+	# 		fmtlen = struct.calcsize(fmt)
+	# 		rec_unpack = struct.Struct(fmt).unpack
+	# 		data = self.fileptr.read(fmtlen)   # read the record from disc
+	# 		s = rec_unpack(data)
+
+	# 		subrecord_id = (s[0] & 0xFF000000) >> 24
+	# 		subrecord_size = s[0] & 0x00FFFFFF
+	# 		# print("id %d size %d" % (subrecord_id, subrecord_size))
+	# 			# if subrecord_id == 21: 
+	# 			# 	self.fileptr.seek(self.offset + self.numbytes, 0) #move forwards to the end of the record as we cannot trust the record length from the 2024
+	# 			# else:
+	# 			# 	self.fileptr.seek(subrecord_size, 1) #move forwards to the end of teh record
+	# 			# continue
+
+	# 		# now decode the subrecord
+	# 		# curr = self.fileptr.tell()
+	# 		if subrecord_id == 100: 
+	# 			sf = self.readscalefactorrecord()
+	# 		return sf
+			
+	###############################################################################
+	# Subrecord Description Subrecord Identifier
+	# DEPTH_ARRAY				1
+	# ACROSS_TRACK_ARRAY    	2
+	# ALONG_TRACK_ARRAY    		3
+	# TRAVEL_TIME_ARRAY    		4
+	# BEAM_ANGLE_ARRAY    		5
+	# MEAN_CAL_AMPLITUDE_ARRAY  6
+	# MEAN_REL_AMPLITUDE_ARRAY  7
+	# ECHO_WIDTH_ARRAY    		8
+	# QUALITY_FACTOR_ARRAY    	9
+	# RECEIVE_HEAVE_ARRAY    	10
+	# DEPTH_ERROR_ARRAY (obsolete)    		11
+	# ACROSS_TRACK_ERROR_ARRAY (obsolete)   12
+	# ALONG_TRACK_ERROR_ARRAY (obsolete)    13
+	# NOMINAL_DEPTH_ARRAY    				14
+	# QUALITY_FLAGS_ARRAY    				15
+	# BEAM_FLAGS_ARRAY    					16
+	# SIGNAL_TO_NOISE_ARRAY    				17
+	# BEAM_ANGLE_FORWARD_ARRAY    			18
+	# VERTICAL_ERROR_ARRAY    				19
+	# HORIZONTAL_ERROR_ARRAY    			20
+	# INTENSITY_SERIES_ARRAY    			21
+	# SECTOR_NUMBER_ARRAY    				22
+	# DETECTION_INFO_ARRAY    				23
+	# INCIDENT_BEAM_ADJ_ARRAY    			24
+	# SYSTEM_CLEANING_ARRAY    				25
+	# DOPPLER_CORRECTION_ARRAY    			26
+	# SONAR_VERT_UNCERTAINTY_ARRAY    		27
+	# SCALE_FACTORS     					100
+	# SEABEAM_SPECIFIC    					102
+	# EM12_SPECIFIC     					103
+	# EM100_SPECIFIC    					104
+	# EM950_SPECIFIC    					105
+	# EM121A_SPECIFIC    					106
+	# EM121_SPECIFIC    					107
+	# SASS_SPECIFIC (To Be Replaced By CMP_SASS)    108
+	# SEAMAP_SPECIFIC                       109
+	# SEABAT_SPECIFIC    					110
+	# EM1000_SPECIFIC    					111
+	# TYPEIII_SEABEAM_SPECIFIC (To Be Replaced By CMP_SASS )    112
+	# SB_AMP_SPECIFIC       				113
+	# SEABAT_II_SPECIFIC    				114
+	# SEABAT_8101_SPECIFIC (obsolete)     	115
+	# SEABEAM_2112_SPECIFIC    				116
+	# ELAC_MKII_SPECIFIC    				117
+	# EM3000_SPECIFIC    					118
+	# EM1002_SPECIFIC 						119
+	# EM300_SPECIFIC    					120
+	# CMP_SASS_SPECIFIC (To replace SASS and TYPEIII_SEABEAM)    121
+	# RESON_8101_SPECIFIC           		122   
+	# RESON_8111_SPECIFIC           		123   
+	# RESON_8124_SPECIFIC           		124   
+	# RESON_8125_SPECIFIC           		125   
+	# RESON_8150_SPECIFIC           		126   
+	# RESON_8160_SPECIFIC           		127   
+	# EM120_SPECIFIC                		128
+	# EM3002_SPECIFIC               		129
+	# EM3000D_SPECIFIC                		130
+	# EM3002D_SPECIFIC                		131
+	# EM121A_SIS_SPECIFIC     				132
+	# EM710_SPECIFIC                 		133
+	# EM302_SPECIFIC                 		134
+	# EM122_SPECIFIC                 		135
+	# GEOSWATH_PLUS_SPECIFIC         		136  
+	# KLEIN_5410_BSS_SPECIFIC         		137
+	# RESON_7125_SPECIFIC     				138
+	# EM2000_SPECIFIC    					139
+	# EM300_RAW_SPECIFIC             		140
+	# EM1002_RAW_SPECIFIC            		141
+	# EM2000_RAW_SPECIFIC           		142
+	# EM3000_RAW_SPECIFIC 					143
+	# EM120_RAW_SPECIFIC             		144
+	# EM3002_RAW_SPECIFIC            		145
+	# EM3000D_RAW_SPECIFIC        			146
+	# EM3002D_RAW_SPECIFIC          		147
+	# EM121A_SIS_RAW_SPECIFIC       		148
+	# EM2040_SPECIFIC     					149
+	# DELTA_T_SPECIFIC     					150
+	# R2SONIC_2022_SPECIFIC      			151
+	# R2SONIC_2024_SPECIFIC     			152             
+	# R2SONIC_2020_SPECIFIC     			153             
+	# SB_ECHOTRAC_SPECIFIC (obsolete)       206
+	# SB_BATHY2000_SPECIFIC (obsolete)      207
+	# SB_MGD77_SPECIFIC (obsolete)          208
+	# SB_BDB_SPECIFIC (obsolete)            209
+	# SB_NOSHDB_SPECIFIC   (obsolete)       210
+	# SB_PDD_SPECIFIC   (obsolete)          211
+	# SB_NAVISOUND_SPECIFIC   (obsolete)    212
+	###############################################################################
+	def read(self, previousscalefactors={}, headeronly=False):
 
 		# read ping header
 		hdrfmt = '>llll5hlH3h2Hlllh'
@@ -270,6 +462,8 @@ class SWATH_BATHYMETRY_PING :
 		data = self.fileptr.read(hdrlen)
 		s = rec_unpack(data)
 		self.time 			= s[0] 
+		self.pingnanotime 	= s[1] 
+		self.timestamp		= self.time + (self.pingnanotime/1000000000)
 		self.longitude 		= s[2] / 10000000
 		self.latitude		= s[3] / 10000000
 		self.numbeams 		= s[4]
@@ -289,21 +483,24 @@ class SWATH_BATHYMETRY_PING :
 		self.gpstidecorrector	= s[18] / 100
 		self.spare			= s[19]
 
+		# SCALE FACTORS ARE NOT ON EVERYPING SO CARRY FORWARDS
+		self.scalefactorsd = previousscalefactors
+
 		# skip the record for performance reasons.  Very handy in some circumstances
 		if headeronly:
 			self.fileptr.seek(self.offset + self.numbytes, 0) #move forwards to the end of the record as we cannot trust the record length from the 2024
 			return
 
 		while (self.fileptr.tell() <= self.offset + self.numbytes): #dont read past the end of the packet length.  This should never happen!
-			fmt = '>l'
-			fmtlen = struct.calcsize(fmt)
-			rec_unpack = struct.Struct(fmt).unpack
-			data = self.fileptr.read(fmtlen)   # read the record from disc
-			s = rec_unpack(data)
+			subrecfmt = '>l'
+			subrecfmtlen = struct.calcsize(subrecfmt)
+			subrecrec_unpack = struct.Struct(subrecfmt).unpack
+			data = self.fileptr.read(subrecfmtlen)   # read the record from disc
+			s = subrecrec_unpack(data)
 
 			subrecord_id = (s[0] & 0xFF000000) >> 24
 			subrecord_size = s[0] & 0x00FFFFFF
-
+			# print("id %d size %d" % (subrecord_id, subrecord_size))
 				# if subrecord_id == 21: 
 				# 	self.fileptr.seek(self.offset + self.numbytes, 0) #move forwards to the end of the record as we cannot trust the record length from the 2024
 				# else:
@@ -312,48 +509,90 @@ class SWATH_BATHYMETRY_PING :
 
 			# now decode the subrecord
 			# curr = self.fileptr.tell()
-			scale, offset, compressionFlag, datatype = self.getscalefactor(subrecord_id, subrecord_size / int(self.numbeams))
-			
-			if subrecord_id == 100: 
-				self.readscalefactors()
-			elif subrecord_id == 1: 
-				self.readarray(self.DEPTH_ARRAY, scale, offset, datatype)
+			if subrecord_id == SCALE_FACTORS:
+				self.readscalefactorrecord()
+				continue
+
+			# 	for s in self.scalefactors:
+			# 		if s.subrecordID == 1:
+			# 			print (s.subrecordID, s.multiplier, s.offset, s.compressionFlag)
+			# 	continue
+			# else:
+				# scale, offset, compressionFlag, datatype = self.getscalefactor(subrecord_id, subrecord_size / int(self.numbeams))
+
+			if subrecord_id == 0:
+				self.fileptr.seek(subrecord_size, 1) #move forwards to the end of teh record
+				continue
+
+			if subrecord_id > len(self.scalefactorsd):
+				self.fileptr.seek(subrecord_size, 1) #move forwards to the end of teh record
+				continue
+
+			sf = self.scalefactorsd[subrecord_id]
+			datatype =  self.getdatatype(subrecord_id, subrecord_size / int(self.numbeams))
+
+			# skip records we do not support
+			if datatype == -999:
+				self.fileptr.seek(subrecord_size, 1) #move forwards to the end of teh record
+				continue
+
+			if subrecord_id == 1: 
+				# scale, offset, compressionFlag, datatype = self.getscalefactor(subrecord_id, subrecord_size / int(self.numbeams))
+				# print (sf.multiplier, sf.offset)
+				# print ("DEPTH ARRAY")
+				self.DEPTH_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 2: 
-				self.readarray(self.ACROSS_TRACK_ARRAY, scale, offset, datatype)
+				# print ("ACROSS ARRAY")
+				self.ACROSS_TRACK_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 3: 
-				self.readarray(self.ALONG_TRACK_ARRAY, scale, offset, datatype)
+				# print ("ALONG ARRAY")
+				self.ALONG_TRACK_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 4: 
-				self.readarray(self.TRAVEL_TIME_ARRAY, scale, offset, datatype)
+				# print ("TT ARRAY")
+				self.TRAVEL_TIME_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 5: 
-				self.readarray(self.BEAM_ANGLE_ARRAY, scale, offset, datatype)
+				# print ("BA ARRAY")
+				self.BEAM_ANGLE_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 6: 
-				self.readarray(self.MEAN_CAL_AMPLITUDE_ARRAY, scale, offset, datatype)
+				# print ("MC ARRAY")
+				self.MEAN_CAL_AMPLITUDE_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 7: 
-				self.readarray(self.MEAN_REL_AMPLITUDE_ARRAY, scale, offset, datatype)
+				# print ("MR ARRAY")
+				self.MEAN_REL_AMPLITUDE_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 9: 
-				self.readarray(self.QUALITY_FACTOR_ARRAY, scale, offset, datatype)
+				# print ("QF ARRAY")
+				self.QUALITY_FACTOR_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
+			elif subrecord_id == 15: 
+				# print ("QF ARRAY")
+				self.QUALITY_FLAGS_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 16: 
-				self.readarray(self.BEAM_FLAGS_ARRAY, scale, offset, datatype)
+				# print ("BF ARRAY")
+				self.BEAM_FLAGS_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 18: 
-				self.readarray(self.BEAM_ANGLE_FORWARD_ARRAY, scale, offset, datatype)
+				# print ("BA ARRAY")
+				self.BEAM_ANGLE_FORWARD_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 19: 
-				self.readarray(self.VERTICAL_ERROR_ARRAY, scale, offset, datatype)
+				# print ("VA ARRAY")
+				self.VERTICAL_ERROR_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 20: 
-				self.readarray(self.VERTICAL_ERROR_ARRAY, scale, offset, datatype)
+				# print ("VE ARRAY")
+				self.VERTICAL_ERROR_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			elif subrecord_id == 21: 
 				before = self.fileptr.tell()
-				self.readintensityarray(self.SNIPPET_SERIES_ARRAY, scale, offset, datatype, self.snippettype)
+				# print ("SN ARRAY")
+				self.SNIPPET_SERIES_ARRAY = self.readintensityarray(sf.multiplier, sf.offset, datatype, self.snippettype)
 				if subrecord_size % 4 > 0:
 					self.fileptr.seek(4 - (subrecord_size % 4), 1) #pkpk we should not need this!!!
 			elif subrecord_id == 22: 
-				self.readarray(self.SECTOR_NUMBER_ARRAY, scale, offset, datatype)
+				# print ("SE ARRAY")
+				self.SECTOR_NUMBER_ARRAY = self.readarray(sf.multiplier, sf.offset, datatype)
 			else:
 				# read to the end of the record to keep in alignment.  This permits us to not have all the decodes in place
 				self.fileptr.seek(subrecord_size, 1) #move forwards to the end of teh record
 			
-			self.fileptr.seek(self.offset + self.numbytes + self.hdrlen, 0) #move forwards to the end of the record as we cannot trust the record length from the 2024
+		self.fileptr.seek(self.offset + self.numbytes, 0) #move forwards to the end of the record as we cannot trust the record length from the 2024
 		
-		return
+		return self.scalefactorsd
 
 	###############################################################################
 	def __str__(self):
@@ -399,32 +638,111 @@ class SWATH_BATHYMETRY_PING :
 		return
 
 	###############################################################################
-	def getscalefactor(self, ID, bytes_per_value):
-		for s in self.scalefactors:
-			if s.subrecordID == ID:			# DEPTH_ARRAY array
-				if bytes_per_value == 1:
-					datatype = 'B' 			#unsigned values
-				elif bytes_per_value == 2:
-					datatype = 'H'			#unsigned values
-					if ID == 2:				#ACROSS_TRACK_ARRAY array
-						datatype = 'h'		#unsigned values
-					if ID == 3:				#ACROSS_TRACK_ARRAY array
-						datatype = 'h'		#unsigned values
-					if ID == 5:				#beam angle array
-						datatype = 'h'		#unsigned values
-				elif bytes_per_value == 4:
-					datatype = 'L'			#unsigned values
-					if ID == 2:				#ACROSS_TRACK_ARRAY array
-						datatype = 'l'		#unsigned values
-					if ID == 5:				#beam angle array
-						datatype = 'l'		#unsigned values
-				else:
-					datatype = 'L'			#unsigned values not sure about this one.  needs test data
-				return s.multiplier, s.offset, s.compressionFlag, datatype
-		return 1,0,0, 'h'
+	def getdatatype(self, ID, bytes_per_value):
+
+		datatype = -999
+		if ID == DEPTH_ARRAY:			
+			if bytes_per_value == 2:
+				datatype = 'H'			#unsigned values
+			elif bytes_per_value == 4:
+				datatype = 'L'			#unsigned values
+		elif ID == NOMINAL_DEPTH_ARRAY:
+			if bytes_per_value == 2:
+				datatype = 'H'			#unsigned values
+			elif bytes_per_value == 4:
+				datatype = 'L'			#unsigned values
+		elif ID == ACROSS_TRACK_ARRAY:
+			if bytes_per_value == 2:
+				datatype = 'h'			#signed values
+			elif bytes_per_value == 4:
+				datatype = 'l'			#signed values
+		elif ID == ALONG_TRACK_ARRAY:
+			if bytes_per_value == 2:
+				datatype = 'h'			#signed values
+			elif bytes_per_value == 4:
+				datatype = 'l'			#signed values
+		elif ID == TRAVEL_TIME_ARRAY:			
+			if bytes_per_value == 2:
+				datatype = 'H'			#unsigned values
+			elif bytes_per_value == 4:
+				datatype = 'L'			#unsigned values
+		elif ID == BEAM_ANGLE_ARRAY:
+			if bytes_per_value == 2:
+				datatype = 'h'			#signed values
+			elif bytes_per_value == 4:
+				datatype = 'l'			#signed values
+		elif ID == MEAN_CAL_AMPLITUDE_ARRAY:
+			if bytes_per_value == 1:
+				datatype = 'b' 			#signed values
+			if bytes_per_value == 2:
+				datatype = 'h'			#signed values
+		elif ID == MEAN_REL_AMPLITUDE_ARRAY:
+			if bytes_per_value == 1:
+				datatype = 'B' 			#unsigned values
+			if bytes_per_value == 2:
+				datatype = 'H'			#unsigned values
+		elif ID == ECHO_WIDTH_ARRAY:
+			if bytes_per_value == 1:
+				datatype = 'B' 			#unsigned values
+			if bytes_per_value == 2:
+				datatype = 'H'			#unsigned values
+		elif ID == QUALITY_FACTOR_ARRAY:
+			datatype = 'B' 			#unsigned values
+		elif ID == RECEIVE_HEAVE_ARRAY:
+			datatype = 'b' 			#signed values
+		elif ID == DEPTH_ERROR_ARRAY:
+			datatype = 'H' 			#unsigned values
+		elif ID == ACROSS_TRACK_ERROR_ARRAY:
+			datatype = 'H' 			#unsigned values
+		elif ID == ALONG_TRACK_ERROR_ARRAY:
+			datatype = 'H' 			#unsigned values
+		elif ID == BEAM_FLAGS_ARRAY:
+			datatype = 'B' 			#unsigned values
+		elif ID == QUALITY_FLAGS_ARRAY:
+			datatype = 'B' 			#unsigned values
+		elif ID == SIGNAL_TO_NOISE_ARRAY:
+			datatype = 'b' 			#signed values
+		elif ID == BEAM_ANGLE_FORWARD_ARRAY:
+			datatype = 'H' 			#signed values
+		elif ID == VERTICAL_ERROR_ARRAY:
+				datatype = 'H' 			#signed values
+		elif ID == HORIZONTAL_ERROR_ARRAY:
+			datatype = 'H' 			#signed values
+		elif ID == SECTOR_NUMBER_ARRAY:
+			datatype = 'B' 			#unsigned values
+		elif ID == DETECTION_INFO_ARRAY:
+			datatype = 'B' 			#unsigned values
+		else:
+			return -999
+		return datatype
 
 	###############################################################################
-	def readscalefactors(self):
+	# def getscalefactor(self, ID, bytes_per_value):
+	# 	for s in self.scalefactors:
+	# 		if s.subrecordID == ID:			# DEPTH_ARRAY array
+	# 			if bytes_per_value == 1:
+	# 				datatype = 'B' 			#unsigned values
+	# 			elif bytes_per_value == 2:
+	# 				datatype = 'H'			#unsigned values
+	# 				if ID == 2:				#ACROSS_TRACK_ARRAY array
+	# 					datatype = 'h'		#unsigned values
+	# 				if ID == 3:				#ACROSS_TRACK_ARRAY array
+	# 					datatype = 'h'		#unsigned values
+	# 				if ID == 5:				#beam angle array
+	# 					datatype = 'h'		#unsigned values
+	# 			elif bytes_per_value == 4:
+	# 				datatype = 'L'			#unsigned values
+	# 				if ID == 2:				#ACROSS_TRACK_ARRAY array
+	# 					datatype = 'l'		#unsigned values
+	# 				if ID == 5:				#beam angle array
+	# 					datatype = 'l'		#unsigned values
+	# 			else:
+	# 				datatype = 'L'			#unsigned values not sure about this one.  needs test data
+	# 			return s.multiplier, s.offset, s.compressionFlag, datatype
+		
+	# 	return 1,0,0, 'h'
+	###############################################################################
+	def readscalefactorrecord(self):
 		# /* First four byte integer contains the number of scale factors */
 		# now read all scale factors
 		scalefmt = '>l'
@@ -439,17 +757,72 @@ class SWATH_BATHYMETRY_PING :
 		scalelen = struct.calcsize(scalefmt)
 		rec_unpack = struct.Struct(scalefmt).unpack
 
+		# self.scalefactorsd = {}
 		for i in range(self.numscalefactors):
 			data = self.fileptr.read(scalelen)
 			s = rec_unpack(data)
 			sf = SCALEFACTOR()
 			sf.subrecordID = (s[0] & 0xFF000000) >> 24;
 			sf.compressionFlag = (s[0] & 0x00FF0000) >> 16;
+			sf.compressionFlag = s[0] & 0xF0;
 			sf.multiplier = s[1]
 			sf.offset = s[2]
-			self.scalefactors.append(sf)
+			sf.datatype = sf.compressionFlag
+
+			# ALONG_ACROSS_TRACK_ARRAY    				=	2
+			# TRACK_ARRAY    				=	3
+			# TRAVEL_TIME_ARRAY    				=	4
+			# BEAM_ANGLE_ARRAY    				=	5
+			# MEAN_CAL_AMPLITUDE_ARRAY  			=	6
+			# MEAN_REL_AMPLITUDE_ARRAY  			=	7
+			# ECHO_WIDTH_ARRAY    				=	8
+			# QUALITY_FACTOR_ARRAY    			=	9
+			# RECEIVE_HEAVE_ARRAY    				=	10
+			# DEPTH_ERROR_ARRAY			    	=	11
+			# ACROSS_TRACK_ERROR_ARRAY 			=  	12
+			# ALONG_TRACK_ERROR_ARRAY				=	13
+			# NOMINAL_DEPTH_ARRAY    				=	14
+			# QUALITY_FLAGS_ARRAY    				=	15
+			# BEAM_FLAGS_ARRAY    				=	16
+			# SIGNAL_TO_NOISE_ARRAY    			=	17
+			# BEAM_ANGLE_FORWARD_ARRAY    		=	18
+			# VERTICAL_ERROR_ARRAY    			=	19
+
+			# if sf.subrecordID == DEPTH_ARRAY:			# DEPTH_ARRAY array
+			# 	if bytes_per_value == 1:
+			# 		sf.datatype = 'B' 			#unsigned values
+			# 	elif bytes_per_value == 2:
+			# 		sf.datatype = 'H'			#unsigned values
+			# 		if ID == 2:				#ACROSS_TRACK_ARRAY array
+			# 			sf.datatype = 'h'		#unsigned values
+			# 		if ID == 3:				#ACROSS_TRACK_ARRAY array
+			# 			sf.datatype = 'h'		#unsigned values
+			# 		if ID == 5:				#beam angle array
+			# 			sf.datatype = 'h'		#unsigned values
+			# 	elif bytes_per_value == 4:
+			# 		sf.datatype = 'L'			#unsigned values
+			# 		if ID == 2:				#ACROSS_TRACK_ARRAY array
+			# 			sf.datatype = 'l'		#unsigned values
+			# 		if ID == 5:				#beam angle array
+			# 			sf.datatype = 'l'		#unsigned values
+			# 	else:
+			# 		datatype = 'L'			#unsigned values not sure about this one.  needs test data
+
 			# print (sf.subrecordID, sf.compressionFlag, sf.multiplier, sf.offset)
-		return
+			self.scalefactorsd[sf.subrecordID] = sf
+
+		# self.scalefactors=[]
+		# for i in range(self.numscalefactors):
+		# 	data = self.fileptr.read(scalelen)
+		# 	s = rec_unpack(data)
+		# 	sf = SCALEFACTOR()
+		# 	sf.subrecordID = (s[0] & 0xFF000000) >> 24;
+		# 	sf.compressionFlag = (s[0] & 0x00FF0000) >> 16;
+		# 	sf.multiplier = s[1]
+		# 	sf.offset = s[2]
+		# 	self.scalefactors.append(sf)
+		# 	# print (sf.subrecordID, sf.compressionFlag, sf.multiplier, sf.offset)
+		# return self.scalefactors
 
 	###############################################################################
 	def readintensityarray(self, snippets, scale, offset, datatype, snippettype):
@@ -716,19 +1089,17 @@ class SWATH_BATHYMETRY_PING :
 		return		
 
 	###############################################################################
-	def readarray(self, values, scale, offset, datatype):
+	def readarray(self, scale, offset, datatype):
 		''' 
 		read the ping array data
 		'''
-		fmt = '>' + str(self.numbeams) + datatype
-		l = struct.calcsize(fmt)
-		rec_unpack = struct.Struct(fmt).unpack
-		
-		data = self.fileptr.read(l) 
-		raw = rec_unpack(data)
-		for d in raw:
-			values.append((d / scale) + offset)
-		return values
+		# https://stackoverflow.com/questions/54679949/unpacking-binary-file-using-struct-unpack-vs-np-frombuffer-vs-np-ndarray-vs-np-f
+
+		fmt = '>' + datatype
+		nparr = np.fromfile(self.fileptr, dtype=np.dtype(fmt), count=self.numbeams)
+		nparr = (nparr / scale) - offset
+		# nparr = (nparr / scale) + offset  we should be subtracting not adding!!!!
+		return nparr
 
 	###############################################################################
 	def currentRecordDateTime(self):
@@ -821,7 +1192,6 @@ class CCOMMENT:
 		print this class
 		'''
 		return pprint.pformat(vars(self))
-
 
 ###############################################################################
 class CATTITUDE:
@@ -1076,13 +1446,16 @@ class GSFREADER:
 			print ("file not found:", filename)
 		self.fileName = filename
 		self.fileSize = os.path.getsize(filename)
-		f = open(filename, 'r+b')		
-		self.fileptr = mmap.mmap(f.fileno(), 0)
+		self.fileptr 		= open(filename, 'rb')
+
+		# f = open(filename, 'r+b')		
+		# self.f = f
+		# self.fileptr = mmap.mmap(f.fileno(), 0)
 		self.hdrfmt = ">LL"
 		self.hdrlen = struct.calcsize(self.hdrfmt)
-		self.scalefactors = []
-		if loadscalefactors:
-			self.scalefactors = self.loadscalefactors()
+		self.scalefactorsd = {}
+		# if loadscalefactors:
+		# self.scalefactors = self.loadscalefactors()
 		self.attitudedata = np.empty((0), int)
 
 	###########################################################################
@@ -1126,21 +1499,21 @@ class GSFREADER:
 		return data
 
 	###########################################################################
-	def loadscalefactors(self):
-		'''
-		rewind, load the scale factors array and rewind to the original position.  We can then use these scalefactors for every ping
-		'''
-		curr = self.fileptr.tell()
-		self.rewind()
+	# def loadscalefactors(self):
+	# 	'''
+	# 	rewind, load the scale factors array and rewind to the original position.  We can then use these scalefactors for every ping
+	# 	'''
+	# 	curr = self.fileptr.tell()
+	# 	self.rewind()
 
-		while self.moreData():
-			numberofbytes, recordidentifier, datagram = self.readDatagram()
-			if recordidentifier == SWATH_BATHYMETRY:
-				datagram.read()
-				self.fileptr.seek(curr, 0)
-				return datagram.scalefactors
-		self.fileptr.seek(curr, 0)
-		return None
+	# 	while self.moreData():
+	# 		numberofbytes, recordidentifier, datagram = self.readDatagram()
+	# 		if recordidentifier == SWATH_BATHYMETRY:
+	# 			sf = datagram.readscalefactors()
+	# 			self.fileptr.seek(curr, 0)
+	# 			return sf
+	# 	self.fileptr.seek(curr, 0)
+	# 	return None
 	
 	###########################################################################
 	def loadattitude(self):
@@ -1176,16 +1549,25 @@ class GSFREADER:
 		rewind, load the navigation from the bathy records and rewind.  output format is ts,x,y,z,roll,pitch,heading
 		'''
 		navigation = []
+		previoustimestamp = 0
 		curr = self.fileptr.tell()
 		self.rewind()
+
 
 		while self.moreData():
 			numberofbytes, recordidentifier, datagram = self.readDatagram()
 			if recordidentifier == SWATH_BATHYMETRY:
-				datagram.read(True)
-				navigation.append([datagram.time + datagram.pingnanotime/1000000000.0, datagram.longitude, datagram.latitude, datagram.height, datagram.roll, datagram.pitch, datagram.heading])
+				datagram.read({}, True)
+				if previoustimestamp == 0:
+					# ensure the first record is not seen as a jump
+					previoustimestamp = datagram.timestamp
+				deltatime = datagram.timestamp - previoustimestamp
+				navigation.append([datagram.timestamp, datagram.longitude, datagram.latitude, datagram.height, datagram.roll, datagram.pitch, datagram.heading, deltatime])
+				previoustimestamp = datagram.timestamp
 		self.fileptr.seek(curr, 0)
-		print ("Navigation records loaded:", len(navigation))
+		# print ("Navigation records loaded:", len(navigation))
+		self.rewind()
+
 		return navigation
 	###########################################################################
 	def getrecordcount(self):
@@ -1209,6 +1591,8 @@ class GSFREADER:
 		# read the datagram header.  This permits us to skip datagrams we do not support
 		numberofbytes, recordidentifier, haschecksum, hdrlen = self.sniffDatagramHeader()
 		# print ("ID %d Bytes %d ftell %d" % (recordidentifier, numberofbytes, self.fileptr.tell()))
+		# if self.fileptr.tell() == 78410380:
+			# print ("pkpkpk")
 		if recordidentifier == HEADER:
 			# create a class for this datagram, but only decode if the resulting class if called by the user.  This makes it much faster
 			dg = CHEADER(self.fileptr, numberofbytes, recordidentifier, hdrlen)
@@ -1455,6 +1839,37 @@ if __name__ == "__main__":
 
 # 	return
 
-
-
 ###############################################################################
+		# if recordidentifier == SWATH_BATHYMETRY:
+		# 	datagram.read()
+		# 	datagram.snippettype = SNIPPET_NONE
+			# print ("%s Lat:%.3f Lon:%.3f Ping:%d Freq:%d Serial %s" % (datagram.currentRecordDateTime(), datagram.latitude, datagram.longitude, datagram.pingnumber, datagram.frequency, datagram.serialnumber))
+
+			# for cross profile plotting
+			# bs = []
+			# for s in datagram.MEAN_REL_AMPLITUDE_ARRAY:
+			# 	if s != 0:
+			# 		bs.append(20 * math.log10(s) - 100)
+			# 	else:
+			# 		bs.append(0)
+
+			# bs = [20 * math.log10(s) - 100 for s in datagram.MEAN_REL_AMPLITUDE_ARRAY]
+			# samplearray = datagram.R2Soniccorrection()
+			# if datagram.frequency == 100000:
+			# 	freq100 = mean(samplearray)
+			# if datagram.frequency == 200000:
+			# 	freq200 = mean(samplearray)
+			# if datagram.frequency == 400000:
+			# 	freq400 = mean(samplearray)
+			# 	# print ("%d,%d,%.3f,%.3f,%.3f" %(pingcount, datagram.pingnumber, freq100, freq200, freq400))
+			# 	print ("%d" %(pingcount))
+			# 	pingcount += 1
+				# if len(bs) > 0:
+				# 	plt.plot(datagram.BEAM_ANGLE_ARRAY, bs, linewidth=0.25, color='blue')
+				# 	plt.ylim([-60,-5])
+				# 	plt.xlim([-60,60])
+				# 	# ax3.plot(datagram.BEAM_ANGLE_ARRAY, datagram.ALONG_TRACK_ARRAY)
+				# 	plt.pause(0.001)
+
+			# datagram.clippolar(-60, 60)
+		# r.fileptr.seek(numberofbytes, 1) # set the file ptr to the end of the record			

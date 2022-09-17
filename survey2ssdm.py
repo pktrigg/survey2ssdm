@@ -58,7 +58,7 @@ import pyproj
 from py7k import s7kreader
 from pyjsf import jsfreader
 from segyreader import segyreader
-#from pygsf import GSFREADER
+from pygsf import GSFREADER
 import readkml
 
 # local from the shared area...
@@ -175,7 +175,7 @@ def process(args):
 	mp_processsegy(args, gpkg, geo)
 
 	# process any and all GSF files
-	# mp_processgsf(args, gpkg, geo)
+	mp_processgsf(args, gpkg, geo)
 
 	print("Completed creation of SSDM tracks to: %s" %(args.outputFilename))
 
@@ -294,7 +294,6 @@ def process7k(filename, outfilename, step):
 	return(navigation)
 
 ################################################################################
-'''
 def processgsf(filename, outfilename, step):
 	#now read the kmall file and return the navigation table filename
 	navigation = []
@@ -310,7 +309,6 @@ def processgsf(filename, outfilename, step):
 		json.dump(navigation, f)
 	
 	return(navigation)
-'''
 ################################################################################
 def processsegy(filename, outfilename, step):
 	#now read the kmall file and return the navigation table filename
@@ -405,7 +403,6 @@ def mp_process7k(args, gpkg, geo):
 		multiprocesshelper.mpresult("")
 
 ################################################################################
-'''
 def mp_processgsf(args, gpkg, geo):
 
 	# boundary = []
@@ -456,9 +453,9 @@ def mp_processgsf(args, gpkg, geo):
 			result = processgsf(filename, outfilename, args.step)
 			results.append([filename, result])
 	else:
-		multiprocesshelper.log("New sgy Files to Import: %d" %(len(boundarytasks)))		
+		multiprocesshelper.log("New GSF Files to Import: %d" %(len(boundarytasks)))		
 		cpu = multiprocesshelper.getcpucount(args.cpu)
-		multiprocesshelper.log("Extracting SGY Navigation with %d CPU's" %(cpu))
+		multiprocesshelper.log("Extracting GSF Navigation with %d CPU's" %(cpu))
 		pool = mp.Pool(cpu)
 		multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
 		poolresults = [pool.apply_async(processgsf, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
@@ -475,7 +472,6 @@ def mp_processgsf(args, gpkg, geo):
 	for result in results:
 		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
 		multiprocesshelper.mpresult("")
-'''
 ################################################################################
 def mp_processsegy(args, gpkg, geo):
 
