@@ -9,7 +9,7 @@
 			"program": "${file}",
 			// "program": "survey2ssdm.py",
 			"python": "c:/python/python.exe",
-			"args": ["-i", "c:/projects/ggmatch/gsf_leich_sample", "-reprocess", "-cpu", "1"]
+			"args": ["-i", "D:/EA640/Data", "-reprocess", "-cpu", "5"]
 		}
 	]
 }
