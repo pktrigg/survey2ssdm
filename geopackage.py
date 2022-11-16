@@ -23,6 +23,9 @@ import geodetic
 def main():
 	'''test the creation of a geopackage using basic python without complex module installs '''
 
+	#decode the xml file for SSDM from OGP
+
+
 	filename = "C:/temp/geopackage.gpkg"
 	con = creategeopackage(filename)
 
@@ -350,7 +353,7 @@ def addsrsrecord(conn, name="WGS84", epsg=4326):
 	VALUES ("""
 	sql +=	"'" + name + "'" + ","
 	sql +=	"'" + str(epsg) + "'"+ ","
-	sql +=  "NONE',"
+	sql +=  "'NONE',"
 	sql +=	"'" + str(epsg) + "'"+ ","
 	sql +=	"'EPSG',"
 	sql +=	"'user specified epsg code')"
@@ -438,13 +441,14 @@ def	addpointrecord(cursor, tablename, envelope, vector, fielddata, epsg=4326):
 	'''add a new POINT to the table'''
 	envelope = calcenvelope(envelope, vector)
 	wkb = createpoint(vector, epsg)
-	fielddata.append(wkb)
+	fd = fielddata.copy()
+	fd.append(wkb)
 	values = " VALUES ("
-	for _ in range(len(fielddata)):
+	for _ in range(len(fd)):
 		values += "?,"
 	values = values[:-1] + ")"
 	sql = "INSERT INTO " + tablename + values
-	v = tuple(fielddata)
+	v = tuple(fd)
 	cursor.execute(sql, v)
 
 ###############################################################################
@@ -453,13 +457,14 @@ def	addlinestringrecord(cursor, tablename, envelope, vectors, fielddata):
 	# update the envelope
 	envelope = calcenvelope(envelope, vectors)
 	wkb = createlinestring(vectors)
-	fielddata.append(wkb)
+	fd = fielddata.copy()
+	fd.append(wkb)
 	values = " VALUES ("
-	for _ in range(len(fielddata)):
+	for _ in range(len(fd)):
 		values += "?,"
 	values = values[:-1] + ")"
 	sql = "INSERT INTO " + tablename + values
-	v = tuple(fielddata)
+	v = tuple(fd)
 	# v = (None,wkb) + tuple(fielddata)
 	cursor.execute(sql, v)
 	return cursor.lastrowid
@@ -470,13 +475,14 @@ def	addpolygonrecord(cursor, tablename, envelope, vectors, fielddata=[]):
 	# update the envelope
 	envelope = calcenvelope(envelope, vectors)
 	wkb = createpolygon(vectors)
-	fielddata.append(wkb)
+	fd = fielddata.copy()
+	fd.append(wkb)
 	values = " VALUES ("
-	for _ in range(len(fielddata)):
+	for _ in range(len(fd)):
 		values += "?,"
 	values = values[:-1] + ")"
 	sql = "INSERT INTO " + tablename + values
-	v = tuple(fielddata)
+	v = tuple(fd)
 
 	cursor.execute(sql, v)
 	return cursor.lastrowid
