@@ -9,7 +9,7 @@
 			"program": "${file}",
 			// "program": "survey2ssdm.py",
 			"python": "c:/python/python.exe",
-			"args": ["-i", "c:/sampledata/s7k", "-reprocess", "-cpu", "5"]
+			"args": ["-i", "c:/sampledata/gsf/likehartpingflagproblem/0118_20220701_064840.gsf"]
 		}
 	]
 }

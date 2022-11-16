@@ -309,40 +309,41 @@ def createSurveyTracklineSSDM():
 	# return table
 
 # ###############################################################################
-# def createTrackPoint():
-# # def createPointSSDMGv2(connection, tablename="pointSSDMGv2", epsg=4326):
-# 	'''helper function to create table for navlab, strapdown and Hipap processing which use point v2 format'''
-# 	type 		= "POINT"		# the point type.  POINT, LINESTRING, POLYGON etc as per OGC types
+def createTrackPoint():
+# def createPointSSDMGv2(connection, tablename="pointSSDMGv2", epsg=4326):
+	'''helper function to create POINT table for QC purposes'''
+	type 		= "POINT"		# the point type.  POINT, LINESTRING, POLYGON etc as per OGC types
 	
-# 	fields 		= []
-# 	fields += ssdmarchive()
-# 	fields += ssdmobject()
+	fields 		= []
+	fields += ssdmarchive()
+	fields += ssdmobject()
 
-# 	fields.append(["LINE_ID", 				"SMALLINT"])
-# 	fields.append(["LINE_NAME", 			"TEXT(40)"])
-# 	fields.append(["LAST_SEIS_PT_ID", 		"SMALLINT"])
-# 	fields.append(["SYMBOLOGY_CODE", 		"TEXT(10)"])
-# 	fields.append(["DATA_SOURCE", 			"TEXT(150)"])		#, size=150) 	#SSDMSurvey_TrackLines class
+	fields.append(["LINE_ID", 				"SMALLINT"])
+	fields.append(["LINE_NAME", 			"TEXT(40)"])
+	fields.append(["LAST_SEIS_PT_ID", 		"SMALLINT"])
+	fields.append(["SYMBOLOGY_CODE", 		"TEXT(10)"])
+	fields.append(["DATA_SOURCE", 			"TEXT(150)"])		#, size=150) 	#SSDMSurvey_TrackLines class
 	
-# 	fields.append(["CONTRACTOR_NAME", 		"TEXT"])			#, size=20)	#SSDMSurvey_TrackLines class
-# 	fields.append(["LINE_LENGTH", 			"DOUBLE"]) 			#SSDMSurvey_TrackLines class
-# 	fields.append(["FIRST_SEIS_PT_ID", 		"DOUBLE"])			#SSDMSurvey_TrackLines class
-# 	fields.append(["HIRES_SEISMIC_EQL_URL",	"TEXT(254)"])		#, size=254)	#SSDMSurvey_TrackLines class
-# 	fields.append(["OTHER_DATA_URL", 		"TEXT(254)"])		#, size=254)	#SSDMSurvey_TrackLines class
+	fields.append(["CONTRACTOR_NAME", 		"TEXT"])			#, size=20)	#SSDMSurvey_TrackLines class
+	fields.append(["LINE_LENGTH", 			"DOUBLE"]) 			#SSDMSurvey_TrackLines class
+	fields.append(["FIRST_SEIS_PT_ID", 		"DOUBLE"])			#SSDMSurvey_TrackLines class
+	fields.append(["HIRES_SEISMIC_EQL_URL",	"TEXT(254)"])		#, size=254)	#SSDMSurvey_TrackLines class
+	fields.append(["OTHER_DATA_URL", 		"TEXT(254)"])		#, size=254)	#SSDMSurvey_TrackLines class
 	
-# 	fields.append(["LAYER", 				"TEXT(255)"])		#, size=255)	#SSDMSurvey_TrackLines class
-# 	fields.append(["SHAPE_Length", 			"DOUBLE"])			#SSDMSurvey_TrackLines class
-# 	fields.append(["SurveyTime", 			"TEXT"])
-# 	fields.append(["UNIXTime", 				"DOUBLE"])
-# 	fields.append(["Longitude", 			"DOUBLE"])
+	fields.append(["LAYER", 				"TEXT(255)"])		#, size=255)	#SSDMSurvey_TrackLines class
+	fields.append(["SHAPE_Length", 			"DOUBLE"])			#SSDMSurvey_TrackLines class
+	fields.append(["SurveyTime", 			"TEXT"])
+	fields.append(["UNIXTime", 				"DOUBLE"])
+	fields.append(["Longitude", 			"DOUBLE"])
 	
-# 	fields.append(["Latitude", 				"DOUBLE"])
-# 	fields.append(["Depth", 				"DOUBLE"])
-# 	fields.append(["Roll", 					"DOUBLE"])
-# 	fields.append(["Pitch", 				"DOUBLE"])
-# 	fields.append(["Heading", 				"DOUBLE"])
+	fields.append(["Latitude", 				"DOUBLE"])
+	fields.append(["Depth", 				"DOUBLE"])
+	fields.append(["Roll", 					"DOUBLE"])
+	fields.append(["Pitch", 				"DOUBLE"])
+	fields.append(["Heading", 				"DOUBLE"])
+	fields.append(["PingFlag", 				"TEXT(254)"])
 	
-# 	return type, fields
+	return type, fields
 
 # 	# table = vectortable (connection, tablename, epsg, type, fields)
 # 	# return table
