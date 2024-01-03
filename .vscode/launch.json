@@ -9,7 +9,7 @@
 			"program": "${file}",
 			// "program": "survey2ssdm.py",
 			"python": "c:/python/python.exe",
-			"args": ["-i", "c:/sampledata/kmall", "-reprocess", "-cpu", "1"]
+			"args": ["-i", "c:/sampledata/sbd", "-reprocess", "-cpu", "1", "-epsgsbd", "32630" ]
 		}
 	]
 }

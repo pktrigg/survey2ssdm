@@ -2,42 +2,6 @@
 #created:		Jan 2019
 #by:			paul.kennedy@guardiangeomatics.com
 #description:	python module to scan a folder structure and import various supported file formats and convert to a SSDM schema within the OGC SSDM schema
-######################
-#done
-# added option to create a per ping navigation file which we can import into caris.  we needed this due to a potential bug in caris importing kmall files.
-# -config to open the ssdm field names so users can edit
-# create proposed survey lines from KML files as exported from qinsy
-# record what is done to a log and skip files already processed
-# multi process for performance gains when dealing with thousands of files.
-# release on github
-# create track plots from kmall files
-# create track plots from s7k files
-
-######################
-#2do
-# add support for segy files.
-# complete SSDM creation to create all tables within SSDM V2
-# test routine to create a full set of empty tables
-# write up notes on an opensource geopackage implementaion of SSDM 
-
-# create tsdip from SVP files.  for this we need the coordinates of the vessel.  we can get this from the SSDM survey track POINT FC if we read it back
-# create track coverage from kmall files
-# create track points with timestamps so we can spatially georeference SVP data
-
-
-# DELPH INS Navigation export
-#
-# date: Date of validity (yyyy/mm/dd)
-# time: Time of validity (hh:mm:ss.ssss)
-# latitude: Latitude, decimal degree
-# longitude: Longitude, decimal degree
-# ellipsoidHeight: Height, meter positive upward
-# heading: Heading, degree
-# roll: Roll, degree
-# pitch: Pitch, degree
-# heave: Heave, meter positive upward
-#
-#date	time	latitude	longitude	ellipsoidHeight	heading	roll	pitch	heave
 
 import sys
 import time
@@ -61,7 +25,7 @@ from segyreader import segyreader
 from pygsf import GSFREADER
 import readkml
 import kmraw
-
+import sbd
 
 # local from the shared area...
 # sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'shared'))
@@ -81,24 +45,15 @@ def main():
 	parser.add_argument('-i', 		action='store', 		default="",		dest='inputfolder', 	help='input folder to process.')
 	parser.add_argument('-o', 		action='store', 		default="",		dest='outputFilename', 	help='output GEOPACKAGE filename.')
 	parser.add_argument('-s', 		action='store', 		default="1",	dest='step', 			help='decimate the data to reduce the output size. [Default: 1]')
-	parser.add_argument('-odir', 	action='store', 		default="",	dest='odir', 			help='Specify a relative output folder e.g. -odir GIS')
+	parser.add_argument('-odir', 	action='store', 		default="",		dest='odir', 			help='Specify a relative output folder e.g. -odir GIS')
 	parser.add_argument('-config', 	action='store_true', 	default=False,	dest='config', 			help='Open the SSDM configuration file for editing e.g. -config')
-	parser.add_argument('-opath', 	action='store', 		default="",	dest='opath', 			help='Specify an output path e.g. -opath c:/temp')
-	parser.add_argument('-odix', 	action='store', 		default="",	dest='odix', 			help='Specify an output filename appendage e.g. -odix _coverage')
+	parser.add_argument('-opath', 	action='store', 		default="",		dest='opath', 			help='Specify an output path e.g. -opath c:/temp')
+	parser.add_argument('-odix', 	action='store', 		default="",		dest='odix', 			help='Specify an output filename appendage e.g. -odix _coverage')
 	parser.add_argument('-epsg', 	action='store', 		default="4326",	dest='epsg', 			help='Specify an output EPSG code for transforming from WGS84 to East,North,e.g. -epsg 4326')
+	parser.add_argument('-epsgsbd', action='store', 		default="0",	dest='epsgsbd', 		help='Specify an output EPSG code for transforming SBD grid coordinates from East,North to WGS84,e.g. -epsg 32750')
 	parser.add_argument('-all', 	action='store_true', 	default=True, 	dest='all', 			help='extract all supported forms of data (ie do everything).')
-	parser.add_argument('-reprocess', 	action='store_true', 	default=False, 	dest='reprocess', 			help='reprocess the survey folders by re-reading input files and creating new GIS features, ignoring the cache files. (ie do everything).')
-	parser.add_argument('-cpu', 		dest='cpu', 			action='store', 		default='0', 	help='number of cpu processes to use in parallel. [Default: 0, all cpu]')
-	# parser.add_argument('-auv', 	action='store_true', 	default=False, 	dest='auv', 			help='extract the REALTIME AUV positions as computed by the AUV.')
-	# parser.add_argument('-navlab', 	action='store_true', 	default=False, 	dest='navlab', 			help='extract the PROCESSED NAVLAB.')
-	# parser.add_argument('-hipap', 	action='store_true',	default=False, 	dest='hipap', 			help='extract the HIPAP UPDATES.')
-	# parser.add_argument('-utp', 	action='store_true', 	default=False, 	dest='utp', 			help='extract the UTP position UPDATES.')
-	# parser.add_argument('-mp', 		action='store_true', 	default=False, 	dest='mp', 				help='extract the survey plan.')
-	# parser.add_argument('-vessel', 	action='store_true', 	default=False, 	dest='vessel', 			help='extract the vessel position UPDATES.')
-	# parser.add_argument('-mbes', 	action='store_true', 	default=False, 	dest='mbes', 			help='extract the AUV Multibeam coverage polygon.')
-	# parser.add_argument('-ctd', 	action='store_true', 	default=False, 	dest='ctd', 			help='extract the /env/ctd file.')
-	# parser.add_argument('-qc', 		action='store_true', 	default=False, 	dest='qcreport', 		help='create a QC report of navigation quality.')
-
+	parser.add_argument('-reprocess',action='store_true', 	default=False, 	dest='reprocess', 		help='reprocess the survey folders by re-reading input files and creating new GIS features, ignoring the cache files. (ie do everything).')
+	parser.add_argument('-cpu', 	action='store',			default='0', 	dest='cpu', 			help='number of cpu processes to use in parallel. [Default: 0, all cpu]')
 
 	args = parser.parse_args()
 	# if len(sys.argv)==1:
@@ -163,6 +118,9 @@ def process(args):
 
 	#load the python proj projection object library if the user has requested it
 	geo = geodetic.geodesy(args.epsg)
+
+	# process any and all .sbd files from EIVA
+	mp_processSBD(args, gpkg, geo)
 
 	# process any and all .raw files from KM
 	mp_processKMRAW(args, gpkg, geo)
@@ -270,6 +228,27 @@ def processsurveyPlan(args, surveyfolder, gpkg, geo):
 		print ("File: %s Survey lines found: %d" % (filename, len(reader.surveylines)))
 		createsurveyplan(reader, linestringtable, geo)
 
+################################################################################
+def processSBD(filename, outfilename, step, epsgsbd):
+	#now read the EIVA .sbd file and return the navigation table filename
+
+	# print("Loading KMALL Navigation...")
+	r = sbd.SBDReader(filename)
+	navigation, navigation2 = r.loadnavigation(step=1)
+	r.close()
+
+	#the sbd files are in east north rather than lat, long so we need to convert them here...
+	geo = geodetic.geodesy(epsgsbd)
+	navigation3 = []
+	for nav in navigation:
+		x, y = geo.convertToGeographicals(nav[1], nav[2])
+		navigation3.append([nav[0], x, y, nav[3]])
+		# if x > 90:
+		# 	print ("oops")
+	with open(outfilename,'w') as f:
+		json.dump(navigation3, f)
+	
+	return(navigation3)
 
 ################################################################################
 def processKMRAW(filename, outfilename, step):
@@ -630,6 +609,95 @@ def mp_processjsf(args, gpkg, geo):
 		multiprocesshelper.mpresult("")
 
 ################################################################################
+def mp_processSBD(args, gpkg, geo):
+
+	# boundary = []
+	boundarytasks = []
+	results = []
+
+	rawfolder = os.path.join(args.inputfolder, ssdmfieldvalue.readvalue("MBES_RAW_FOLDER"))
+	if not os.path.isdir(rawfolder):
+		rawfolder = args.inputfolder
+
+	# rawfilename = ssdmfieldvalue.readvalue("MBES_RAW_FILENAME")
+
+	matches = fileutils.findFiles2(True, rawfolder, "*.sbd")
+
+	# if args.epsgsbd == "0":
+	# 	reader = sbd.SBDReader(matches[0])
+	# 	timstamp, x, y, heading = reader.getfirstcoordinate()
+	# 	# args.epsgsbd = geo.getEPSGfromEN(x,y)
+	# 	args.epsgsbd = geodetic.getPRJFromEPSG(x,y)
+
+	# surveyname = os.path.basename(args.inputfolder) #this folder should be the survey NAME
+
+	#create the POINT table for the trackplot
+	tptype, tpfields = geopackage_ssdm.createTrackPoint()
+	pointtable = geopackage.vectortable(gpkg.connection, "SurveyTrackPoint", args.epsg, tptype, tpfields)
+
+	#create the linestring table for the trackplot
+	type, fields = geopackage_ssdm.createSurveyTracklineSSDM()
+	linestringtable = geopackage.vectortable(gpkg.connection, "SurveyTrackLine", args.epsg, type, fields)
+
+	for filename in matches:
+		root = os.path.splitext(filename)[0]
+		root = os.path.basename(filename)
+		outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+		os.makedirs(outputfolder, exist_ok=True)
+		# makedirs(outputfolder)
+		outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+		if args.reprocess:
+			if os.path.exists(outfilename):
+				os.unlink(outfilename)
+		if os.path.exists(outfilename):
+			# the cache file exists so load it
+			with open(outfilename) as f:
+				# print("loading file %s" %(outfilename))
+				lst = json.load(f)
+				results.append([filename, lst])
+		else:
+			boundarytasks.append([filename, outfilename])
+
+	if args.cpu == '1':
+		for filename in matches:
+			root = os.path.splitext(filename)[0]
+			root = os.path.basename(filename)
+			outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+			outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+			if os.path.exists(outfilename):
+				continue
+
+			root = os.path.splitext(filename)[0]
+			root = os.path.basename(filename)
+			outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+			os.makedirs(outputfolder, exist_ok=True)
+			outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+			result = processSBD(filename, outfilename, args.step, args.epsgsbd)
+			results.append([filename, result])			
+	else:
+		multiprocesshelper.log("New km .raw Files to Import: %d" %(len(boundarytasks)))		
+		cpu = multiprocesshelper.getcpucount(args.cpu)
+		multiprocesshelper.log("Extracting KM .RAW Navigation with %d CPU's" %(cpu))
+		pool = mp.Pool(cpu)
+		multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
+		poolresults = [pool.apply_async(processSBD, (task[0], task[1], args.step, args.epsgsbd), callback=multiprocesshelper.mpresult) for task in boundarytasks]
+		pool.close()
+		pool.join()
+		for idx, result in enumerate (poolresults):
+			results.append([boundarytasks[idx][0], result._value])
+			# print (result._value)
+
+	# now we can read the results files and create the geometry into the SSDM table
+	multiprocesshelper.log("Files to Import to geopackage: %d" %(len(results)))		
+
+	multiprocesshelper.g_procprogress.setmaximum(len(results))
+	for result in results:
+		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
+		createTrackPoint(result[0], result[1], pointtable, float(args.step), geo)
+		multiprocesshelper.mpresult("")
+
+
+################################################################################
 def mp_processKMRAW(args, gpkg, geo):
 
 	# boundary = []
@@ -784,7 +852,7 @@ def createTrackPoint(filename, navigation, pointtable, step, geo, surveyname="")
 	pitchIDX 			= 5
 	headingIDX 			= 6
 	deltatimeIDX		= 7
-	pingflagIDX			= 8
+	pingflagIDX			= 3
 
 	# navigation = reader.loadnavigation(step)
 	totalDistanceRun = 0
@@ -879,14 +947,7 @@ def createTrackPoint(filename, navigation, pointtable, step, geo, surveyname="")
 		fielddata.append(0.0)
 
 		# fields.append(["PingFlag", 				"DOUBLE"])
-		fielddata.append("%d" % (update[pingflagIDX]))
-
-
-
-
-
-
-
+		# fielddata.append("%d" % (update[pingflagIDX]))
 
 		# now write the point to the table.
 		# linestringtable.addlinestringrecord(linestring, fielddata)		

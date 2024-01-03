@@ -560,6 +560,7 @@ class kmallreader:
 						continue
 					if datagram.longitude > 180:
 						continue
+					# timestamp, x, y, z, heading
 					navigation.append([to_timestamp(datagram.date), datagram.longitude, datagram.latitude, 0.0, datagram.heading])
 					lastimestamp = self.recordTime
 					if firstRecordOnly: #we only want the first record, so reset the file pointer and quit
