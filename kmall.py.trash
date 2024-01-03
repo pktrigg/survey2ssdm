@@ -24,64 +24,33 @@ import numpy as np
 from argparse import ArgumentParser
 from datetime import datetime, timedelta
 import glob
-import ggmbes
-# import mcap
-# from sklearn.cluster import DBSCAN
-import statistics
-
-# import pyproj
 
 # from sqlalchemy import false
 import timeseries
-import fileutils
-import geodetic
 
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import proj3d
-from matplotlib.colors import LightSource
-
-	
 ###########################################################################
 def main():
-
 	parser = ArgumentParser(description='Read a KMALL file.')
-	parser.add_argument('-epsg', 	action='store', 		default="0",	dest='epsg', 			help='Specify an output EPSG code for transforming from WGS84 to East,North,e.g. -epsg 4326')
 	parser.add_argument('-i', dest='inputFile', action='store', default="", help='Input filename.pos to process.')
-	parser.add_argument('-s', 		action='store', 		default="1",	dest='step', 			help='decimate the data to reduce the output size. [Default: 1]')
 	
 	files = []
-	args = parser.parse_args()
-	# args.inputFile = "/Users/paulkennedy/Documents/development/sampledata/0822_20210330_091839.kmall"
-	args.inputFile = "c:/sampledata/EM304_0002_20220406_122446.kmall"
-	# args.inputFile = "c:/sampledata/EM2040_0822_20210330_091839.kmall"
-	args.inputFile = "c:/sampledata/DRIX_0003_20230817_033515_Orca1.kmall"
-	
-	if len (args.inputFile) == 0:
-		# no file is specified, so look for a .pos file in terh current folder.
-		inputfolder = os.getcwd()
-		files = findFiles2(False, inputfolder, "*.kmall")
-	else:
-		files.append(args.inputFile)
+	try:
+		args = parser.parse_args()
+		if len (args.inputFile) == 0:
+			# no file is specified, so look for a .pos file in terh current folder.
+			inputfolder = os.getcwd()
+			files = findFiles2(False, inputfolder, "*.kmall")
+		else:
+			files.append(args.inputFile)
 
-	for file in files:
-		print ("processing file: %s" % (file))
-		process(file)
-	# except:
-	# 	#open the ALL file for reading by creating a new kmallreader class and passin in the filename to open.
-	# 	filename =   "C:/sampledata/kmall/B_S2980_3005_20220220_084910.kmall"
-		# extract2timeseries(filename)
+		for file in files:
+			print ("processing file: %s" % (file))
+			process(file)
+	except:
+		#open the ALL file for reading by creating a new kmallreader class and passin in the filename to open.
+		filename =   "C:/sampledata/kmall/B_S2980_3005_20220220_084910.kmall"
+		extract2timeseries(filename)
 		# process(filename)
-
-# ###############################################################################
-# def despike_point_cloud(points, eps, min_samples):
-# 	"""Despike a point cloud using DBSCAN."""
-# 	clustering = DBSCAN(eps=eps, min_samples=min_samples).fit(points)
-# 	labels = clustering.labels_
-# 	filtered_points = points[labels != -1]
-# 	rejected_points = points[labels == -1]
-    
-# 	print("EPS: %f MinSample: %f Rejected: %d Survivors: %d InputCount %d" % (eps,  min_samples, len(rejected_points), len(filtered_points), len(points)))
-# 	return rejected_points
 
 ###############################################################################
 ###############################################################################
@@ -198,35 +167,18 @@ def process(filename):
 	print("Complete reading ALL file :-)")
 	r.close()
 
-###############################################################################
-def computebathypointcloud(datagram, geo):
-	'''using the MRZ datagram, efficiently compute a numpy array of the point clouds  '''
 
-	for beam in datagram.beams:
-		beam.east, beam.north = geo.convertToGrid((beam.deltaLongitude_deg + datagram.longitude), (beam.deltaLatitude_deg + datagram.latitude))
-		beam.depth = beam.z_reRefPoint_m - datagram.txTransducerDepth_m
-		# beam.depth = beam.z_reRefPoint_m - datagram.z_waterLevelReRefPoint_m
-		beam.id 	= datagram.ping
-	npeast = np.fromiter((beam.east for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
-	npnorth = np.fromiter((beam.north for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
-	npdepth = np.fromiter((beam.depth for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
-	npq = np.fromiter((beam.rejectionInfo1 for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
+###############################################################################
+def computebathypointcloud(datagram):
+	'''using the MRZ datagram, efficiently compute a numpy array of the point clouds  '''
+	npdeltaLatitude_deg = np.fromiter((beam.deltaLatitude_deg for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
+	npdeltaLongitude_deg = np.fromiter((beam.deltaLongitude_deg for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
+	npz_reRefPoint_m = np.fromiter((beam.z_reRefPoint_m for beam in datagram.beams), float, count=len(datagram.beams)) #. Also, adding count=len(stars)
 
 	# we can now comput absolute positions from the relative positions
-	# npLatitude_deg = npdeltaLatitude_deg + datagram.latitude_deg	
-	# npLongitude_deg = npdeltaLongitude_deg + datagram.longitude_deg
-	return (npeast, npnorth, npdepth, npq)
-
-###############################################################################
-def update_progress(job_title, progress):
-	'''progress value should be a value between 0 and 1'''
-	length = 20 # modify this to change the length
-	block = int(round(length*progress))
-	msg = "\r{0}: [{1}] {2}%".format(job_title, "#"*block + "-"*(length-block), round(progress*100, 2))
-	if progress >= 1: msg += " DONE\r\n"
-	sys.stdout.write(msg)
-	sys.stdout.flush()
-
+	npLatitude_deg = npdeltaLatitude_deg + datagram.latitude_deg
+	npLongitude_deg = npdeltaLongitude_deg + datagram.longitude_deg
+	return (npLongitude_deg, npLatitude_deg, npz_reRefPoint_m)
 
 ###############################################################################
 def decodeheader(s, obj):
@@ -243,48 +195,23 @@ def decodeheader(s, obj):
 ###############################################################################
 class Cpointcloud:
 	'''class to hold a point cloud'''
-	# xarr = np.empty([0], dtype=float)
-	# yarr = np.empty([0], dtype=float)
-	# zarr = np.empty([0], dtype=float)
-	# qarr = np.empty([0], dtype=float)
-
-	# self.xarr = []
-	# self.yarr = []
-	# self.zarr = []
-	# self.qarr = []
-	# self.idarr = []
+	xarr = np.empty([0], dtype=float)
+	yarr = np.empty([0], dtype=float)
+	zarr = np.empty([0], dtype=float)
 
 	###############################################################################
-	def __init__(self, npx=None, npy=None, npz=None, npq=None, npid=None):
+	def __init__(self, npx=None, npy=None, npz=None):
 		'''add the new ping of data to the existing array '''
-		# np.append(self.xarr, np.array(npx))
-		# np.append(self.yarr, np.array(npy))
-		# np.append(self.zarr, np.array(npz))
-		# np.append(self.qarr, np.array(npq))
-		# np.append(self.idarr, np.array(npid))
-		self.xarr = []
-		self.yarr = []
-		self.zarr = []
-		self.qarr = []
-		# idarr = []
-		# self.xarr = np.array(npx)
-		# self.yarr = np.array(npy)
-		# self.zarr = np.array(npz)
-		# self.qarr = np.array(npq)
-		# self.idarr = np.array(npid)
+		np.append(self.xarr, np.array(npx))
+		np.append(self.yarr, np.array(npy))
+		np.append(self.zarr, np.array(npz))
 
 	###############################################################################
-	def add(self, npx, npy, npz, npq):
+	def add(self, npx, npy, npz):
 		'''add the new ping of data to the existing array '''
-		# self.xarr = np.append(self.xarr, np.array(npx))
-		# self.yarr = np.append(self.yarr, np.array(npy))
-		# self.zarr = np.append(self.zarr, np.array(npz))
-		# self.qarr = np.append(self.zarr, np.array(npq))
-		self.xarr.extend(npx)
-		self.yarr.extend(npy)
-		self.zarr.extend(npz)
-		self.qarr.extend(npq)
-		# self.idarr.extend(npid)
+		self.xarr = np.append(self.xarr, np.array(npx))
+		self.yarr = np.append(self.yarr, np.array(npy))
+		self.zarr = np.append(self.zarr, np.array(npz))
 
 ###############################################################################
 class kmallreader:
@@ -425,45 +352,22 @@ class kmallreader:
 		self.fileptr.seek(curr, 0)
 		return data
 
-	# ###############################################################################
-	# def getRecordCount(self):
-	# 	'''read through the entire file as fast as possible to get a count of all records.  useful for progress bars so user can see what is happening'''
-	# 	count = 0
-	# 	start = 0
-	# 	end = 0
-	# 	self.rewind()
-
-	# 	numberofbytes, typeofdatagram, version, systemid, echosounderid, time_sec, time_nanosec, date = self.readDatagramHeader()
-	# 	start = time_sec + time_nanosec/1000000000
-	# 	self.rewind()
-	# 	while self.moreData():
-	# 		numberofbytes, typeofdatagram, version, systemid, echosounderid, time_sec, time_nanosec, date = self.readDatagramHeader()
-	# 		self.fileptr.seek(numberofbytes, 1)
-	# 		count += 1
-	# 	self.rewind()
-	# 	end = time_sec + time_nanosec/1000000000
-	# 	return count, start, end
-
 	###############################################################################
-	def getRecordCount(self, id=""):
+	def getRecordCount(self):
 		'''read through the entire file as fast as possible to get a count of all records.  useful for progress bars so user can see what is happening'''
 		count = 0
 		start = 0
 		end = 0
 		self.rewind()
-
-		numberofbytes, typeofdatagram, version, systemid, echosounderid, time_sec, time_nanosec, date = self.readDatagramHeader()
-		start = time_sec + time_nanosec/1000000000
+		numberofbytes, STX, typeofdatagram, EMModel, RecordDate, RecordTime = self.readDatagramHeader()
+		start = to_timestamp(to_DateTime(RecordDate, RecordTime))
 		self.rewind()
 		while self.moreData():
-			numberofbytes, typeofdatagram, version, systemid, echosounderid, time_sec, time_nanosec, date = self.readDatagramHeader()
+			numberofbytes, STX, typeofdatagram, EMModel, RecordDate, RecordTime = self.readDatagramHeader()
 			self.fileptr.seek(numberofbytes, 1)
-			if id in typeofdatagram:
-				count += 1
-			if len(id) == 0:
-				count += 1
+			count += 1
 		self.rewind()
-		end = time_sec + time_nanosec/1000000000
+		end = to_timestamp(to_DateTime(RecordDate, RecordTime))
 		return count, start, end
 
 	###############################################################################
@@ -493,43 +397,13 @@ class kmallreader:
 		if typeofdatagram == '#SPO': # Position
 			dg = POSITION(self.fileptr, numberofbytes)
 			return dg.typeofdatagram, dg
-		if typeofdatagram == '#MRZ': # MBES
+		if typeofdatagram == '#MRZ': # Position
 			dg = RANGEDEPTH(self.fileptr, numberofbytes)
 			return dg.typeofdatagram, dg
 		else:
 			dg = UNKNOWN_RECORD(self.fileptr, numberofbytes, typeofdatagram)
 			return dg.typeofdatagram, dg
 			# self.fileptr.seek(numberofbytes, 1)
-
-###############################################################################
-	def getapproximatepositon(self):
-		'''read the first position record so we have a clue where we are in the world'''
-		longitude = 0
-		latitude = 0
-		self.rewind()
-		while self.moreData():
-			try:
-				# print(self.fileptr.tell())
-				typeofdatagram, datagram = self.readDatagram()
-				if (typeofdatagram == '#SPO'):
-					datagram.read()
-					# trap bad values
-					if datagram.latitude < -90:
-						continue
-					if datagram.latitude > 90:
-						continue
-					if datagram.longitude < -180:
-						continue
-					if datagram.longitude > 180:
-						continue
-					longitude = datagram.longitude
-					latitude = datagram.latitude
-					break
-			except:
-				e = sys.exc_info()[0]
-				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
-		self.rewind()
-		return longitude, latitude
 
 ###############################################################################
 	def loadNavigation(self, firstRecordOnly=False, step=0):
@@ -591,8 +465,8 @@ class kmallreader:
 					for sample in datagram.data:
 						timestamp = (sample[3] + sample[4]/1000000000)
 						# print (from_timestamp(timestamp), sample[4]/1000000000)
-						#time, x, y, z, roll, pitch, heading, heave
-						attitude.append([timestamp, sample[6], sample[7], sample[8], sample[9], sample[10], sample[11], sample[12]])
+						#time, x, y, z, roll, pitch, heading
+						attitude.append([timestamp, sample[6], sample[7], sample[8], sample[9], sample[10], sample[11]])
 			except:
 				e = sys.exc_info()[0]
 				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
@@ -645,62 +519,6 @@ class kmallreader:
 				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
 		self.rewind()
 		return pingnavigation
-
-###############################################################################
-	def loadpingdata(self, step=0):
-		'''loads all the navigation from the PING into list so we can extract the ellipsoidal height'''
-		navigation		= []
-		pingdata		= []
-		lastimestamp 	= 0
-		
-		self.rewind()
-		
-		while self.moreData():
-			try:
-				# print(self.fileptr.tell())
-				typeofdatagram, datagram = self.readDatagram()
-				if (typeofdatagram == 'CORRUPT'):
-					#we have seen corrupt kmall files when sis crashes.
-					self.rewind()
-					return navigation, pingdata
-				if (self.recordTime - lastimestamp) < step:
-					# skip...  performance increase
-					continue
-
-				if (typeofdatagram == '#MRZ'):
-					datagram.read(True)
-					# trap bad values
-					if datagram.latitude < -90:
-						continue
-					if datagram.latitude > 90:
-						continue
-					if datagram.longitude < -180:
-						continue
-					if datagram.longitude > 180:
-						continue
-
-					navigation.append([to_timestamp(datagram.date), datagram.latitude, datagram.longitude, datagram.ellipsoidHeightReRefPoint_m, datagram.heading, datagram.txTransducerDepth_m, datagram.z_waterLevelReRefPoint_m, 0.0])
-					lastimestamp = self.recordTime
-
-					ph = ggmbes.GGPING()
-					ph.timestamp 			= to_timestamp(datagram.date)
-					ph.longitude 			= datagram.longitude
-					ph.latitude 			= datagram.latitude
-					ph.ellipsoidalheight 	= datagram.ellipsoidHeightReRefPoint_m
-					ph.heading		 		= datagram.heading
-					ph.pitch			 	= 0
-					ph.roll			 		= 0
-					ph.heave			 	= 0
-					ph.tidecorrector	 	= 0 #datagram.txTransducerDepth_m # or is it this one? datagram.z_waterLevelReRefPoint_m
-					ph.waterLevelReRefPoint_m = datagram.z_waterLevelReRefPoint_m
-					ph.txTransducerDepth_m = datagram.txTransducerDepth_m
-					pingdata.append(ph)
-
-			except:
-				e = sys.exc_info()[0]
-				print("Error: %s.  Please check file.  it seems to be corrupt: %s" % (e, self.fileName))
-		self.rewind()
-		return navigation, pingdata
 
 ###############################################################################
 	def getDatagramName(self, typeofdatagram):
@@ -774,31 +592,17 @@ class kmallreader:
 
 ###############################################################################
 class cBeam:
-	def __init__(self, timestamp, decodestructure, beambyteoffset):
-			# remeber the offset so we can modify easily
-			self.beambyteoffset = beambyteoffset
-
-			# "HB 7B H6 f 2Hf 4f 7f 6fH 3H"
+	def __init__(self, timestamp, decodestructure):
 			# Data Fields
-			self.timestamp 					= timestamp 			#2 2
-			self.soundingIndex 				= decodestructure[0]	#1 3
-			self.txSectorNumb 				= decodestructure[1]	#1 4
+			self.timestamp 					= timestamp
+			self.soundingIndex 				= decodestructure[0]
+			self.txSectorNumb 				= decodestructure[1]
 			# Detection info.
-			# Bottom detection type. Normal bottom detection, extra detection, or rejected.
-			# 0 = normal detection
-			# 1 = extra detection
-			# 2 = rejected detection
-			# In case 2, the estimated range has been used to fill in amplitude samples in the seabed image datagram.
-			self.detectionType 				= decodestructure[2]	#1 5
-			# Method for determining bottom detection, e.g. amplitude or phase.
-			# 0 = no valid detection
-			# 1 = amplitude detection
-			# 2 = phase detection
-			# 3-15 for future use.
-			self.detectionMethod 			= decodestructure[3]	#1 6
-			self.rejectionInfo1 			= decodestructure[4]	#1 7
-			self.rejectionInfo2 			= decodestructure[5]	#1 8
-			self.postProcessingInfo 		= decodestructure[6]	#1 9
+			self.detectionType 				= decodestructure[2]
+			self.detectionMethod 			= decodestructure[3]
+			self.rejectionInfo1 			= decodestructure[4]
+			self.rejectionInfo2 			= decodestructure[5]
+			self.postProcessingInfo 		= decodestructure[6]
 			self.detectionClass 			= decodestructure[7]
 			self.detectionConfidenceLevel 	= decodestructure[8]
 			self.padding 					= decodestructure[9]
@@ -838,10 +642,6 @@ class cBeam:
 			self.SIcentreSample 				= decodestructure[38]
 			self.SInumSamples 					= decodestructure[39]
 
-			self.east							= 0
-			self.north							= 0
-			self.depth 							= 0
-			self.id 							= 0
 ###############################################################################
 class ATTITUDE:
 	def __init__(self, fileptr, numberofbytes):
@@ -852,13 +652,6 @@ class ATTITUDE:
 		self.data 				= []
 		self.fileptr.seek(numberofbytes, 1)
 
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the STARTof the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-	
-	#################################################################################################
 	def read(self):
 		self.fileptr.seek(self.offset, 0)
 		rec_fmt = kmallreader.EMdgmHeader_def  + kmallreader.EMdgmSKMinfo_def
@@ -952,13 +745,6 @@ class CLOCK:
 		self.data 				= ""
 		self.fileptr.seek(numberofbytes, 1)
 
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the STARTof the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-
-	################################################################################################	
 	def read(self):
 		self.fileptr.seek(self.offset, 0)
 		rec_fmt = kmallreader.EMdgmHeader_def  + kmallreader.EMdgmScommon_def + kmallreader.EMdgmSCLdataFromSensor_def
@@ -983,7 +769,6 @@ class CLOCK:
 
 ###############################################################################
 class IIP_INSTALLATION:
-	################################################################################################	
 	def __init__(self, fileptr, numberofbytes):
 		self.typeofdatagram = '#IIP'	# assign the KM code for this datagram type
 		self.offset = fileptr.tell()	# remember where this packet resides in the file so we can return if needed
@@ -992,13 +777,6 @@ class IIP_INSTALLATION:
 		self.fileptr.seek(numberofbytes, 1)	 # move the file pointer to the end of the record so we can skip as the default actions
 		self.data = ""
 
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the STARTof the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-
-	################################################################################################	
 	def read(self):
 		self.fileptr.seek(self.offset, 0)# move the file pointer to the start of the record so we can read from disc
 
@@ -1045,25 +823,13 @@ class IIP_INSTALLATION:
 ###############################################################################
 class RANGEDEPTH:
 	def __init__(self, fileptr, numberofbytes):
-		self.typeofdatagram = '#MRZ'			# assign the KM code for this datagram type
-		self.offset = fileptr.tell()			# remember where this packet resides in the file so we can return if needed
-		self.numberofbytes = numberofbytes		# remember how many bytes this packet contains
-		self.fileptr = fileptr		  			# remember the file pointer so we do not need to pass from the host process
-		self.fileptr.seek(numberofbytes, 1)	 	# move the file pointer to the end of the record so we can skip as the default actions
+		self.typeofdatagram = '#MRZ'	# assign the KM code for this datagram type
+		self.offset = fileptr.tell()	# remember where this packet resides in the file so we can return if needed
+		self.numberofbytes = numberofbytes			  # remember how many bytes this packet contains
+		self.fileptr = fileptr		  # remember the file pointer so we do not need to pass from the host process
+		self.fileptr.seek(numberofbytes, 1)	 # move the file pointer to the end of the record so we can skip as the default actions
 		self.data = ""
 
-	# we will rewrite only the beam flag info with this.
-	# we need to compute the offset to the beam data and then the offset to each beam, 
-	#we then set the beam flag
-	#we then write out the record to a new file
-
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the START of the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-	
-	################################################################################################	
 	def read(self, headeronly=False):
 		self.fileptr.seek(self.offset, 0)# move the file pointer to the start of the record so we can read from disc
 		rec_fmt = kmallreader.EMdgmHeader_def
@@ -1079,7 +845,7 @@ class RANGEDEPTH:
 		self.numOfDgms 				= s[0]
 		self.dgmNum 				= s[1]
 
-		EMdgmMbody_def				= "=2H8B"
+		EMdgmMbody_def				= "=2h8B"
 		rec_fmt = EMdgmMbody_def
 		rec_len = struct.calcsize(rec_fmt)
 		rec_unpack = struct.Struct(rec_fmt).unpack
@@ -1097,7 +863,6 @@ class RANGEDEPTH:
 
 
 		EMdgmMRZ_pingInfo_def = "=2Hf6BH11f2H2BHL3f2Hf 2H 6f4B 2df"
-		EMdgmMRZ_pingInfo_def = "=2Hf6BH11f2H2BHL3f2Hf 2H 6f4B 2df f2BH"
 		rec_fmt = EMdgmMRZ_pingInfo_def
 		rec_len = struct.calcsize(rec_fmt)
 		rec_unpack = struct.Struct(rec_fmt).unpack
@@ -1160,67 +925,36 @@ class RANGEDEPTH:
 		self.longitude									= s[46]
 		self.ellipsoidHeightReRefPoint_m				= s[47]
 
-		# new for RevH
-		self.bsCorrectionOffset_dB						= s[48]
-		self.lambertsLawApplied							= s[49]
-		self.iceWindow									= s[50]
-		self.activeModes								= s[51]
-	
 		if headeronly:
-			# reset the file pointer to the end of the packet.  for some reason we are 4 bytes out??? pkpk
+			# reset the file pointer to the end of the packet.  for some reasdon we are 4 bytes out??? pkpk
 			self.fileptr.seek(self.offset + self.numberofbytes, 0)
 			return
 
 		for i in range(self.numTxSectors):
-			if self.version	== 1:
-				EMdgmMRZ_txSectorInfo_def = "=4B7f2BH" #pkpkpkpkpkpkpk this is wrong with sample file from 2021
-			else:
-				#revision H of KMALL specification
-				EMdgmMRZ_txSectorInfo_def = "=4B 7f 2B H 3f"
-
+			EMdgmMRZ_txSectorInfo_def = "=4B7f2BH"
 			rec_fmt = EMdgmMRZ_txSectorInfo_def
 			rec_len = struct.calcsize(rec_fmt)
 			rec_unpack = struct.Struct(rec_fmt).unpack
 			s = rec_unpack(self.fileptr.read(rec_len))
 
-			if self.version	== 1:
-				self.txSectorNumb			= s[0]
-				self.txArrNumber			= s[1]
-				self.txSubArray				= s[2]
-				self.padding0				= s[3]
-				self.sectorTransmitDelay_sec= s[4]
-				self.tiltAngleReTx_deg		= s[5]
-				self.txNominalSourceLevel_dB= s[6]
-				self.txFocusRange_m			= s[7]
-				self.centreFreq_Hz			= s[8]
-				self.signalBandWidth_Hz		= s[9]
-				self.totalSignalLength_sec	= s[10]
-				self.pulseShading			= s[11]
-				self.signalWaveForm			= s[12]
-				self.padding1				= s[13]
-
-			else:
-				self.txSectorNumb			= s[0]
-				self.txArrNumber			= s[1]
-				self.txSubArray				= s[2]
-				self.padding0				= s[3]
-				self.sectorTransmitDelay_sec= s[4]
-				self.tiltAngleReTx_deg		= s[5]
-				self.txNominalSourceLevel_dB= s[6]
-				self.txFocusRange_m			= s[7]
-				self.centreFreq_Hz			= s[8]
-				self.signalBandWidth_Hz		= s[9]
-				self.totalSignalLength_sec	= s[10]
-				self.pulseShading			= s[11]
-				self.signalWaveForm			= s[12]
-				self.padding1				= s[13]
-				self.highVoltageLevel_dB	= s[14]
-				self.sectorTrackingCorr_dB	= s[15]
-				self.effectiveSignalLength_sec	= s[16]
+			self.txSectorNumb			= s[0]
+			self.txArrNumber			= s[1]
+			self.txSubArray				= s[2]
+			self.padding0				= s[3]
+			self.sectorTransmitDelay_sec= s[4]
+			self.tiltAngleReTx_deg		= s[5]
+			self.txNominalSourceLevel_dB= s[6]
+			self.txFocusRange_m			= s[7]
+			self.centreFreq_Hz			= s[8]
+			self.signalBandWidth_Hz		= s[9]
+			self.totalSignalLength_sec	= s[10]
+			self.pulseShading			= s[11]
+			self.signalWaveForm			= s[12]
+			self.padding1				= s[13]
 
 
-		# receiver specific information for this swath
-		EMdgmMRZ_rxInfo_def = "4H 4f 4H"
+		# receiver speific information for this swath
+		EMdgmMRZ_rxInfo_def = "4H4f4H"
 		rec_fmt = EMdgmMRZ_rxInfo_def
 		rec_len = struct.calcsize(rec_fmt)
 		rec_unpack = struct.Struct(rec_fmt).unpack
@@ -1258,13 +992,10 @@ class RANGEDEPTH:
 		rec_unpack = struct.Struct(rec_fmt).unpack
 
 		beams = []
-
 		timestamp = to_timestamp(self.date)
 		for i in range(self.numSoundingsMaxMain):
-			beambyteoffset = self.fileptr.tell() - self.offset	# remember where this packet resides in the DATAGRAM BYTES so we can modify if needed
-			# beambyteoffset = (i * rec_len)	# remember where this packet resides in the DATAGRAM BYTES so we can modify if needed
 			s = rec_unpack(self.fileptr.read(rec_len))
-			beam = cBeam(timestamp, s, beambyteoffset)
+			beam = cBeam(timestamp, s)
 			beams.append(beam)
 
 		self.beams = beams
@@ -1292,13 +1023,6 @@ class POSITION:
 		self.fileptr.seek(numberofbytes, 1)	 # move the file pointer to the end of the record so we can skip as the default actions
 		self.data = ""
 
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the START of the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-
-	################################################################################################	
 	def read(self):
 		self.fileptr.seek(self.offset, 0)# move the file pointer to the start of the record so we can read from disc
 		rec_fmt = kmallreader.EMdgmHeader_def +  kmallreader.EMdgmScommon_def
@@ -1347,12 +1071,6 @@ class IOP_RUNTIME:
 		self.fileptr = fileptr		  # remember the file pointer so we do not need to pass from the host process
 		self.fileptr.seek(numberofbytes, 1)	 # move the file pointer to the end of the record so we can skip as the default actions
 		self.data = ""
-
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the START of the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
 
 	###############################################################################
 	def read(self):
@@ -1598,14 +1316,6 @@ class UNKNOWN_RECORD:
 		self.fileptr = fileptr
 		self.fileptr.seek(numberofbytes, 1)
 		self.data = ""
-
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the START of the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-
-	################################################################################################	
 	def read(self):
 		self.data = self.fileptr.read(self.numberofbytes)
 
@@ -1619,13 +1329,6 @@ class SVP:
 		self.fileptr.seek(numberofbytes, 1)
 		self.data = []
 
-	################################################################################################	
-	def loadbytes(self):
-		self.fileptr.seek(self.offset, 0)	 	# move the file pointer to the START of the record so we can skip as the default actions
-		self.data = self.fileptr.read(self.numberofbytes)
-		return self.data
-
-	################################################################################################	
 	def read(self):
 		self.fileptr.seek(self.offset, 0)
 		rec_fmt = kmallreader.EMdgmHeader_def + "HH4sLdd" 

@@ -18,7 +18,7 @@ from datetime import timedelta
 def main():
 	#open the ALL file for reading by creating a new s7kReader class and passin in the filename to open.
 	filename =   "C:/development/ggtools/7k/20131026_215823.s7k"
-
+	filename = r"C:\sampledata\s7k\20221025_115016_Hydro2.s7k"
 	r = s7kreader(filename)
 	pingCount = 0
 	start_time = time.time() # time the process
@@ -125,6 +125,10 @@ class s7kreader:
 			recordtypeidentifier = s[12]
 			deviceidentifier = s[13]
 			
+			#trap corrupt datagram (we have seen these)
+			if numberOfBytes == 0:
+				return 0,0,0
+
 			# now reset file pointer
 			self.fileptr.seek(curr, 0)
 			
@@ -166,7 +170,7 @@ class s7kreader:
 
 			return numberOfBytes, recordtypeidentifier, self.recorddate
 		except struct.error:
-			return 0,0,0,0,0,0
+			return 0,0,0
 
 	def readDatagramBytes(self, offset, byteCount):
 		'''read the entire raw bytes for the datagram without changing the file pointer.  this is used for file conditioning'''

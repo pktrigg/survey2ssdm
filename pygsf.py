@@ -1562,7 +1562,7 @@ class GSFREADER:
 					# ensure the first record is not seen as a jump
 					previoustimestamp = datagram.timestamp
 				deltatime = datagram.timestamp - previoustimestamp
-				navigation.append([datagram.timestamp, datagram.longitude, datagram.latitude, datagram.height, datagram.roll, datagram.pitch, datagram.heading, deltatime])
+				navigation.append([datagram.timestamp, datagram.longitude, datagram.latitude, datagram.height, datagram.roll, datagram.pitch, datagram.heading, deltatime, datagram.pingflags])
 				previoustimestamp = datagram.timestamp
 		self.fileptr.seek(curr, 0)
 		# print ("Navigation records loaded:", len(navigation))

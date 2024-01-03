@@ -60,6 +60,8 @@ from pyjsf import jsfreader
 from segyreader import segyreader
 from pygsf import GSFREADER
 import readkml
+import kmraw
+
 
 # local from the shared area...
 # sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'shared'))
@@ -161,6 +163,9 @@ def process(args):
 
 	#load the python proj projection object library if the user has requested it
 	geo = geodetic.geodesy(args.epsg)
+
+	# process any and all .raw files from KM
+	mp_processKMRAW(args, gpkg, geo)
 
 	# process any and all kmall files
 	mp_processKMALL(args, gpkg, geo)
@@ -264,6 +269,21 @@ def processsurveyPlan(args, surveyfolder, gpkg, geo):
 		reader = readkml.reader(filename)
 		print ("File: %s Survey lines found: %d" % (filename, len(reader.surveylines)))
 		createsurveyplan(reader, linestringtable, geo)
+
+
+################################################################################
+def processKMRAW(filename, outfilename, step):
+	#now read the km .raw file and return the navigation table filename
+
+	# print("Loading KMALL Navigation...")
+	r = kmraw.KMRAWreader(filename)
+	navigation = r.loadnavigation(step=1)
+	r.close()
+
+	with open(outfilename,'w') as f:
+		json.dump(navigation, f)
+	
+	return(navigation)
 
 ################################################################################
 def processKMALL(filename, outfilename, step):
@@ -419,6 +439,10 @@ def mp_processgsf(args, gpkg, geo):
 
 	# surveyname = os.path.basename(args.inputfolder) #this folder should be the survey NAME
 
+	#create the POINT table for the trackplot
+	tptype, tpfields = geopackage_ssdm.createTrackPoint()
+	pointtable = geopackage.vectortable(gpkg.connection, "SurveyTrackPoint", args.epsg, tptype, tpfields)
+
 	#create the linestring table for the trackplot
 	type, fields = geopackage_ssdm.createSurveyTracklineSSDM()
 	linestringtable = geopackage.vectortable(gpkg.connection, "SurveyTrackLine", args.epsg, type, fields)
@@ -471,6 +495,7 @@ def mp_processgsf(args, gpkg, geo):
 	multiprocesshelper.g_procprogress.setmaximum(len(results))
 	for result in results:
 		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
+		createTrackPoint(result[0], result[1], pointtable, float(args.step), geo)
 		multiprocesshelper.mpresult("")
 ################################################################################
 def mp_processsegy(args, gpkg, geo):
@@ -605,6 +630,76 @@ def mp_processjsf(args, gpkg, geo):
 		multiprocesshelper.mpresult("")
 
 ################################################################################
+def mp_processKMRAW(args, gpkg, geo):
+
+	# boundary = []
+	boundarytasks = []
+	results = []
+
+	rawfolder = os.path.join(args.inputfolder, ssdmfieldvalue.readvalue("MBES_RAW_FOLDER"))
+	if not os.path.isdir(rawfolder):
+		rawfolder = args.inputfolder
+
+	# rawfilename = ssdmfieldvalue.readvalue("MBES_RAW_FILENAME")
+
+	matches = fileutils.findFiles2(True, rawfolder, "*.raw")
+
+	# surveyname = os.path.basename(args.inputfolder) #this folder should be the survey NAME
+
+	#create the linestring table for the trackplot
+	type, fields = geopackage_ssdm.createSurveyTracklineSSDM()
+	linestringtable = geopackage.vectortable(gpkg.connection, "SurveyTrackLine", args.epsg, type, fields)
+
+	for filename in matches:
+		root = os.path.splitext(filename)[0]
+		root = os.path.basename(filename)
+		outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+		os.makedirs(outputfolder, exist_ok=True)
+		# makedirs(outputfolder)
+		outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+		if args.reprocess:
+			if os.path.exists(outfilename):
+				os.unlink(outfilename)
+		if os.path.exists(outfilename):
+			# the cache file exists so load it
+			with open(outfilename) as f:
+				# print("loading file %s" %(outfilename))
+				lst = json.load(f)
+				results.append([filename, lst])
+		else:
+			boundarytasks.append([filename, outfilename])
+
+	if args.cpu == '1':
+		for filename in matches:
+			root = os.path.splitext(filename)[0]
+			root = os.path.basename(filename)
+			outputfolder = os.path.join(os.path.dirname(args.outputFilename), "log")
+			os.makedirs(outputfolder, exist_ok=True)
+			outfilename = os.path.join(outputfolder, root+"_navigation.txt").replace('\\','/')
+			result = processKMRAW(filename, outfilename, args.step)
+			results.append([filename, result])			
+	else:
+		multiprocesshelper.log("New km .raw Files to Import: %d" %(len(boundarytasks)))		
+		cpu = multiprocesshelper.getcpucount(args.cpu)
+		multiprocesshelper.log("Extracting KM .RAW Navigation with %d CPU's" %(cpu))
+		pool = mp.Pool(cpu)
+		multiprocesshelper.g_procprogress.setmaximum(len(boundarytasks))
+		poolresults = [pool.apply_async(processKMRAW, (task[0], task[1], args.step), callback=multiprocesshelper.mpresult) for task in boundarytasks]
+		pool.close()
+		pool.join()
+		for idx, result in enumerate (poolresults):
+			results.append([boundarytasks[idx][0], result._value])
+			# print (result._value)
+
+	# now we can read the results files and create the geometry into the SSDM table
+	multiprocesshelper.log("Files to Import to geopackage: %d" %(len(results)))		
+
+	multiprocesshelper.g_procprogress.setmaximum(len(results))
+	for result in results:
+		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
+		multiprocesshelper.mpresult("")
+
+################################################################################
 def mp_processKMALL(args, gpkg, geo):
 
 	# boundary = []
@@ -674,6 +769,130 @@ def mp_processKMALL(args, gpkg, geo):
 	for result in results:
 		createTrackLine(result[0], result[1], linestringtable, float(args.step), geo)
 		multiprocesshelper.mpresult("")
+
+###############################################################################
+def createTrackPoint(filename, navigation, pointtable, step, geo, surveyname=""):
+	'''create a point table into the SSDM which we can use to identify where we were and the time we were there'''
+	lastTimeStamp = 0
+	pointstring = []
+
+	timeIDX				= 0
+	longitudeIDX		= 1
+	latitudeIDX			= 2
+	depthIDX 			= 3
+	rollIDX 			= 4
+	pitchIDX 			= 5
+	headingIDX 			= 6
+	deltatimeIDX		= 7
+	pingflagIDX			= 8
+
+	# navigation = reader.loadnavigation(step)
+	totalDistanceRun = 0
+
+	if navigation is None: #trap out empty files.
+		return
+	print(filename)
+	try:
+		if len(navigation) == 0: #trap out empty files.
+			print("file is empty: %s" % (filename))
+			return
+	except:
+		return
+	# prevX =  navigation[0][longitudeIDX]
+	# prevY = navigation[0][latitudeIDX]
+
+	# for update in navigation:
+		# distance = geodetic.est_dist(update[latitudeIDX], update[longitudeIDX], prevY, prevX)
+		# totalDistanceRun += distance
+		# prevX = update[longitudeIDX]
+		# prevY = update[latitudeIDX]
+
+	# compute the brg1 line heading
+	# distance, brg1, brg2 = geodetic.calculateRangeBearingFromGeographicals(navigation[0][1], navigation[0][2], navigation[-1][1], navigation[-1][2])
+	# create the trackline shape file
+	for update in navigation:
+		x,y = geo.convertToGrid(update[longitudeIDX],update[latitudeIDX])
+		# linestring.append(x)
+		# linestring.append(y)
+		# lastTimeStamp = update[0]
+		# recDate = from_timestamp(navigation[0][timeIDX]).strftime("%Y%m%d")
+	
+		###########################
+		# write out the FIELDS data
+		###########################
+
+		# write out the FIELDS data
+		fielddata = []
+		fielddata += setssdmarchivefields() # 2 fields
+		fielddata += setssdmobjectfields() # 4 fields
+
+		fielddata.append(ssdmfieldvalue.readvalue("LINE_ID"))
+		#LINE_NAME
+		fielddata.append(os.path.basename(filename))
+		#LAST_SEIS_PT_ID
+		fielddata.append(int(navigation[-1][timeIDX]))
+		#SYMBOLOGY_CODE
+		fielddata.append(ssdmfieldvalue.readvalue("TRACK_SYMBOLOGY_CODE"))
+		#DATA_SOURCE
+		fielddata.append(os.path.basename(filename))
+		#CONTRACTOR_NAME
+		fielddata.append(ssdmfieldvalue.readvalue("CONTRACTOR_NAME"))
+		#LINE_LENGTH
+		fielddata.append(totalDistanceRun)
+		#FIRST_SEIS_PT_ID
+		fielddata.append(int(navigation[0][timeIDX]))
+		#HIRES_SEISMIC_EQL_URL
+		fielddata.append(ssdmfieldvalue.readvalue("HIRES_SEISMIC_EQL_URL"))
+		#OTHER_DATA_URL
+		fielddata.append(ssdmfieldvalue.readvalue("OTHER_DATA_URL"))
+		# #HIRES_SEISMIC_RAP_URL
+		# fielddata.append(ssdmfieldvalue.readvalue("HIRES_SEISMIC_RAP_URL"))
+		#LAYER
+		fielddata.append(ssdmfieldvalue.readvalue("TRACK_LAYER"))
+		#SHAPE_Length
+		fielddata.append(totalDistanceRun)
+
+
+		##################################################
+		# fields.append(["SurveyTime", 			"TEXT"])
+		fielddata.append(from_timestamp(update[timeIDX]).strftime("%Y%m%d"))
+
+		# fields.append(["UNIXTime", 				"DOUBLE"])
+		fielddata.append(update[timeIDX])
+
+		# fields.append(["Longitude", 			"DOUBLE"])
+		fielddata.append(update[longitudeIDX])
+	
+		# fields.append(["Latitude", 				"DOUBLE"])
+		fielddata.append(update[latitudeIDX])
+	
+		# fields.append(["Depth", 				"DOUBLE"])
+		fielddata.append(update[depthIDX])
+
+		# fields.append(["Roll", 					"DOUBLE"])
+		fielddata.append(0.0)
+
+		# fields.append(["Pitch", 				"DOUBLE"])
+		fielddata.append(0.0)
+
+		# fields.append(["Heading", 				"DOUBLE"])
+		fielddata.append(0.0)
+
+		# fields.append(["PingFlag", 				"DOUBLE"])
+		fielddata.append("%d" % (update[pingflagIDX]))
+
+
+
+
+
+
+
+
+		# now write the point to the table.
+		# linestringtable.addlinestringrecord(linestring, fielddata)		
+		pointtable.addpointrecord(x, y, fielddata)
+
+	pointtable.close()
 
 ###############################################################################
 def createTrackLine(filename, navigation, linestringtable, step, geo, surveyname=""):
